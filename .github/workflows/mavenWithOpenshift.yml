@@ -165,7 +165,7 @@ jobs:
       with:
         image: ${{ steps.build-image.outputs.image }}
         tags: ${{ steps.build-image.outputs.tags }}
-        registry: ${{ env.OPENSHIFT_SERVER } # ${{ env.IMAGE_REGISTRY }}
+        registry: ${{ env.OPENSHIFT_SERVER }
         username: ${{ env.IMAGE_REGISTRY_USER }}
         password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
 
