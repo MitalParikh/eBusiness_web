@@ -45,7 +45,7 @@ env:
 
   # 🖊️ EDIT to change the image registry settings.
   # Registries such as GHCR, Quay.io, and Docker Hub are supported.
-  IMAGE_REGISTRY: "image-registry.openshift-image-registry.svc:5000/"
+  IMAGE_REGISTRY: "image-registry.openshift-image-registry.svc:5000/mitalparikh-dev/"
   IMAGE_REGISTRY_USER: "mitalparikh"
   IMAGE_REGISTRY_PASSWORD: ${{ secrets.OPENSHIFT_TOKEN }}
 
