@@ -165,7 +165,7 @@ jobs:
       with:
         image: ${{ steps.build-image.outputs.image }}
         tags: ${{ steps.build-image.outputs.tags }}
-        registry: 'image-registry.openshift-image-registry.svc:5000/mitalparikh-dev/'
+        registry: 'default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/mitalparikh-dev/'
         username: ${{ env.IMAGE_REGISTRY_USER }}
         password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
 
