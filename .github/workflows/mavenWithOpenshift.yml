@@ -45,9 +45,9 @@ env:
 
   # 🖊️ EDIT to change the image registry settings.
   # Registries such as GHCR, Quay.io, and Docker Hub are supported.
-  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
-  IMAGE_REGISTRY_USER: ${{ github.actor }}
-  IMAGE_REGISTRY_PASSWORD: ${{ github.token }}
+  IMAGE_REGISTRY: "image-registry.openshift-image-registry.svc:5000/mitalparikh-dev/ebusiness-web-ocp-git@sha256:latest"
+  IMAGE_REGISTRY_USER: "mitalparikh"
+  IMAGE_REGISTRY_PASSWORD: ${{ secrets.OPENSHIFT_TOKEN }}
 
   # 🖊️ EDIT to specify custom tags for the container image, or default tags will be generated below.
   IMAGE_TAGS: ""
