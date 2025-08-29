@@ -36,7 +36,7 @@ env:
   OPENSHIFT_NAMESPACE: "mitalparikh-dev"
 
   # 🖊️ EDIT to set a name for your OpenShift app, or a default one will be generated below.
-  APP_NAME: "eBusiness-ocp-app"
+  APP_NAME: "ebusiness-web-ocp-git"
 
   # 🖊️ EDIT with the port your application should be accessible on.
   # If the container image exposes *exactly one* port, this can be left blank.
@@ -45,7 +45,7 @@ env:
 
   # 🖊️ EDIT to change the image registry settings.
   # Registries such as GHCR, Quay.io, and Docker Hub are supported.
-  IMAGE_REGISTRY: "image-registry.openshift-image-registry.svc:5000/mitalparikh-dev"
+  IMAGE_REGISTRY: "image-registry.openshift-image-registry.svc:5000/mitalparikh-dev/ebusiness-web-ocp-git@sha256:3350a4cf182b355de253944cfa2cc0ecf5f50e421a39b80b946e613edadb2a32"
   IMAGE_REGISTRY_USER: "mitalparikh"
   IMAGE_REGISTRY_PASSWORD: ${{ secrets.OPENSHIFT_TOKEN }}
 
