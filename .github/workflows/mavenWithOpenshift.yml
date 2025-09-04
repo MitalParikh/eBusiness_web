@@ -163,7 +163,7 @@ jobs:
       id: push-image
       uses: redhat-actions/push-to-registry@v2
       with:
-        image: ${{ steps.build-image.outputs.image }}
+        image: ${{ env.APP_NAME }}
         tags: ${{ env.IMAGE_TAGS }}
         registry: 'default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/mitalparikh-dev/'
         username: ${{ env.IMAGE_REGISTRY_USER }}
