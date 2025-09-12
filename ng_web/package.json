@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "packageManager": "npm@10.9.2",
   "engines": {
-            "node": "^22.17.1",
-            "npm": "^10.9.2"
-          },
+    "node": "^22.17.1",
+    "npm": "^10.9.2"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -19,10 +19,12 @@
     "@angular/common": "^18.2.0",
     "@angular/compiler": "^18.2.0",
     "@angular/core": "^18.2.0",
+    "@angular/fire": "^18.0.1",
     "@angular/forms": "^18.2.0",
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "firebase": "^10.12.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

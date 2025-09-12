@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { ListenerGridComponent } from './tools/queue-admin/listener-grid.component';
+import { AuthService } from './services/auth.service';
+import { User } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -11,7 +14,7 @@ import { ListenerGridComponent } from './tools/queue-admin/listener-grid.compone
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   showMenu = false;
   activeTab = 'viewer'; // default tab
   sliderImages = [
@@ -22,9 +25,21 @@ export class AppComponent {
   currentSlide = 0;
   fadingOutIndex: number | null = null;
   transitionMs = 600;
+  title = 'eBusiness';
+  
+  // Authentication properties
+  user$: Observable<User | null>;
 
-  constructor() {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.preloadImages();
+    this.user$ = this.authService.user$;
+  }
+
+  ngOnInit() {
+    // You can add any initialization logic here
   }
 
   preloadImages() {
@@ -47,5 +62,18 @@ export class AppComponent {
       }
     }, this.transitionMs);
   }
-  title = 'eBusiness';
+
+  // Authentication methods
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  async logout() {
+    try {
+      await this.authService.signOut();
+      this.router.navigate(['/']);
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  }
 }

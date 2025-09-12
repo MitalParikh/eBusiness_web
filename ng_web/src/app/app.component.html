@@ -1,7 +1,13 @@
 <header class="fixed-header">
   <div class="auth-links">
-    <a routerLink="/login" class="auth-link">Login</a>
-    <a routerLink="/signup" class="auth-link primary">Sign Up</a>
+    <!-- Show login/signup links when user is not authenticated -->
+    <ng-container *ngIf="user$ | async as user; else notLoggedIn">
+      <span class="user-info">Welcome, {{ user.displayName || user.email }}</span>
+      <button class="auth-link logout-btn" (click)="logout()">Logout</button>
+    </ng-container>
+    <ng-template #notLoggedIn>
+      <a routerLink="/login" class="auth-link">Login</a>
+    </ng-template>
   </div>
   <div class="header-slider">
     <!-- Images clickable to advance slider; cross-fade without flicker -->
@@ -25,12 +31,19 @@
       </a>
       <a 
         class="tools-tab" 
+        [class.active]="activeTab === 'ebizFlow'" 
+        routerLink="/ebizFlow"
+        (click)="activeTab = 'ebizFlow'">
+        EbizFlow
+      </a>
+      <a 
+        class="tools-tab" 
         [class.active]="activeTab === 'admin'" 
         routerLink="/listener"
         (click)="activeTab = 'admin'">
         Projects
       </a>
-      <a 
+      <!-- <a 
         class="tools-tab" 
         [class.active]="activeTab === 'admin'" 
         routerLink="/listener"
@@ -43,7 +56,7 @@
         routerLink="/listener"
         (click)="activeTab = 'admin'">
         Order tracking
-      </a>
+      </a> -->
     </nav>
   </div>
 </header>

@@ -1,0 +1,221 @@
+.scheduler-widget {
+  background: white;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 600;
+}
+
+.widget-icon {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.widget-title {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.expand-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  margin-right: 0.5rem;
+}
+
+.expand-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.delete-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.widget-content {
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
+}
+
+/* Event Summary */
+.event-summary {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.event-summary h4 {
+  margin: 0 0 0.8rem 0;
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.summary-item {
+  margin-bottom: 0.4rem;
+  color: #34495e;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.summary-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Validation Errors */
+.validation-errors {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 8px;
+  border-left: 4px solid #e53e3e;
+}
+
+.validation-errors h5 {
+  margin: 0 0 0.5rem 0;
+  color: #e53e3e;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.validation-errors ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #e53e3e;
+  font-size: 0.85rem;
+}
+
+.validation-errors li {
+  margin-bottom: 0.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .widget-content {
+    padding: 1rem;
+  }
+  
+  .widget-header {
+    padding: 0.8rem 1rem;
+  }
+  
+  .widget-title {
+    font-size: 1rem;
+  }
+}
+
+/* Animation for form interactions */
+.form-control:invalid {
+  border-color: #e74c3c;
+}
+
+.form-control:valid {
+  border-color: #27ae60;
+}
+
+/* Hover effects for better UX */
+.form-control:hover:not(:focus) {
+  border-color: #bdc3c7;
+}
+
+/* Custom select styling */
+select.form-control {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  appearance: none;
+}
+
+/* Textarea specific styling */
+textarea.form-control {
+  resize: vertical;
+  min-height: 60px;
+}
