@@ -1,0 +1,50 @@
+    name: Deploy Spring Boot WAR to GCP
+
+    on:
+      push:
+            branches: [ "feature/V1" ]
+      # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+      workflow_dispatch:
+        
+
+    jobs:
+      build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - name: Set up Java
+            uses: actions/setup-java@v4
+            with:
+              distribution: 'temurin'
+              java-version: '17'
+
+          - name: Build with Maven
+            run: mvn clean package -DskipTests
+
+          - name: Authenticate to GCP
+            uses: google-github-actions/auth@v2
+            with:
+              credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+          - name: Set up Cloud SDK
+            uses: google-github-actions/setup-gcloud@v2
+
+          - name: Build and push Docker image to Google Container Registry
+            run: |
+              gcloud auth configure-docker
+              docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/eBusiness-ocp-app:latest .
+              docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/eBusiness-ocp-app:latest
+            env:
+              GCP_PROJECT_ID: ebizflow # Replace with your GCP project ID
+
+          - name: Deploy to Cloud Run
+            uses: google-github-actions/deploy-cloudrun@v2
+            with:
+              service: eBusiness-ocp-app # Replace with your desired Cloud Run service name
+              image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/eBusiness-ocp-app:latest
+              region: us-central1 # Replace with your desired GCP region
+              allow-unauthenticated: true # Adjust as needed
+            env:
+              GCP_PROJECT_ID: ebizflow # Replace with your GCP project ID
