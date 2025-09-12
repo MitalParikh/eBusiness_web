@@ -2,8 +2,8 @@
 
     on:
       push:
-    branches: [ "feature/V1" ]
-      # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+        branches: [ "feature/V1" ]
+      
       workflow_dispatch:
 
     jobs:
