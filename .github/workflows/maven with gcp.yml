@@ -33,10 +33,9 @@
 
           - name: Build and push Docker image to Google Container Registry
             run: |
-              $IMAGE_URI="${{ env.GCP_REG_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.APP_NAME }}:latest"
               gcloud auth configure-docker ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev
-              docker build -t "$IMAGE_URI" .
-              docker push "$IMAGE_URI"
+              docker build -t ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.APP_NAME }}:latest .
+              docker push ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.APP_NAME }}:latest
             env:
               GCP_PROJECT_ID: ebizflow # Replace with your GCP project ID
               GCP_REG_LOCATION: us-south1
