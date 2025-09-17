@@ -46,9 +46,10 @@
             uses: google-github-actions/deploy-cloudrun@v2
             with:
               service: eBusiness-ocp-app # Replace with your desired Cloud Run service name
-              image: ${{ env.GC_REG_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/eBusiness-ocp-app:latest
+              image: ${{ env.GC_REG_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.APP_NAME }}:latest
               region: us-south1 # Replace with your desired GCP region
               allow-unauthenticated: false # Adjust as needed
             env:
               GCP_PROJECT_ID: ebizflow # Replace with your GCP project ID
               GCP_REG_LOCATION: us-south1-docker.pkg.dev
+              APP_NAME: eBusiness-gcp-app
