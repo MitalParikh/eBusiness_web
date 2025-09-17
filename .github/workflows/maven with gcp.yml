@@ -34,21 +34,21 @@
           - name: Build and push Docker image to Google Container Registry
             run: |
               gcloud auth configure-docker ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev
-              docker build -t ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.APP_NAME }}:latest .
-              docker push ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.APP_NAME }}:latest
+              docker build -t ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.IMG_NAME }}:latest .
+              docker push ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.IMG_NAME }}:latest
             env:
               GCP_PROJECT_ID: ebizflow # Replace with your GCP project ID
               GCP_REG_LOCATION: us-south1
-              APP_NAME: eBusiness-gcp-app
+              IMG_NAME: ebizflow-gcp
 
           - name: Deploy to Cloud Run
             uses: google-github-actions/deploy-cloudrun@v2
             with:
               service: eBusiness-ocp-app # Replace with your desired Cloud Run service name
-              image: ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.APP_NAME }}:latest
+              image: ${{ env.GCP_REG_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.IMG_NAME }}:latest
               region: us-south1 # Replace with your desired GCP region
               allow-unauthenticated: false # Adjust as needed
             env:
               GCP_PROJECT_ID: ebizflow # Replace with your GCP project ID
               GCP_REG_LOCATION: us-south1-docker.pkg.dev
-              APP_NAME: eBusiness-gcp-app
+              IMG_NAME: ebizflow-gcp
