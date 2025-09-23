@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { HeaderThemeService, HeaderTheme } from '../services/header-theme.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +13,29 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   isLoading = false;
   errorMessage = '';
   authMode: 'signin' | 'signup' = 'signin';
-  
-  // Form data
   email = '';
   password = '';
   confirmPassword = '';
+  backgroundGradient = 'linear-gradient(135deg, #66b7ea 0%, #4b92a2 50%, #93fbe4 100%)';
+  private themeSub: Subscription;
 
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private headerThemeService: HeaderThemeService
+  ) {
+    this.themeSub = this.headerThemeService.theme$.subscribe((theme: HeaderTheme) => {
+      this.backgroundGradient = theme.gradient;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.themeSub) this.themeSub.unsubscribe();
+  }
 
   toggleAuthMode(): void {
     this.authMode = this.authMode === 'signin' ? 'signup' : 'signin';

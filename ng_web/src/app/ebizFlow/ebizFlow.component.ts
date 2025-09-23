@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService, Order } from '../services/order.service';
+import { HeaderThemeService, HeaderTheme } from '../services/header-theme.service';
+import { Subscription } from 'rxjs';
 import { SchedulerComponent, SchedulerData } from '../scheduler';
 
 interface ToolItem {
@@ -33,7 +35,7 @@ interface DroppedItem {
   templateUrl: './ebizFlow.component.html',
   styleUrls: ['./ebizFlow.component.css']
 })
-export class EbizFlowComponent implements OnInit {
+export class EbizFlowComponent implements OnInit, OnDestroy {
   
   tools: ToolItem[] = [
     {
@@ -83,11 +85,36 @@ export class EbizFlowComponent implements OnInit {
     participants: ''
   };
 
-  constructor(private orderService: OrderService) { }
+  backgroundGradient = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+  areaNumberTextColor = 'white';
+  private themeSub: Subscription;
+
+  constructor(private orderService: OrderService, private headerThemeService: HeaderThemeService) {
+    this.themeSub = this.headerThemeService.theme$.subscribe((theme: HeaderTheme) => {
+      this.backgroundGradient = theme.gradient;
+      // Set area number text color based on gradient
+      this.areaNumberTextColor = this.getAreaNumberTextColor(theme.gradient);
+    });
+  }
+
+  private getAreaNumberTextColor(gradient: string): string {
+    // For img7 gradient, use black text when gradient contains white/light shades
+    if ( /f[0-9a-f]{5}f[0-9a-f]/i.test(gradient)) {
+      return 'black';
+    }
+    // Default to white for all other gradients
+    return 'white';
+  }
 
   ngOnInit(): void {
     // Initialize dropping areas
     this.initializeDroppingAreas();
+  }
+
+  ngOnDestroy(): void {
+    if (this.themeSub) {
+      this.themeSub.unsubscribe();
+    }
   }
 
   initializeDroppingAreas(): void {

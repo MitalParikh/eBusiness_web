@@ -22,7 +22,7 @@
   </div>
 
   <!-- Main Workspace -->
-  <div class="workspace-container">
+  <div class="workspace-container" [ngStyle]="{'background': backgroundGradient}">
       <!-- Workspace Controls -->
       <div class="workspace-controls">
         <select class="workspace-dropdown" [(ngModel)]="selectedMode" (ngModelChange)="onModeChange()">
@@ -49,7 +49,7 @@
             (dragenter)="onAreaDragEnter($event, area)"
             (dragleave)="onAreaDragLeave($event, area)"
             (drop)="onAreaDrop($event, area)">
-            <div class="area-number">{{ area.number }}</div>
+            <div class="area-number" [ngStyle]="{'background': backgroundGradient, 'color': areaNumberTextColor}">{{ area.number }}</div>
             <div class="area-content" *ngIf="area.droppedItem">
               <!-- Widget view -->
               <div class="widget-container" 
@@ -69,7 +69,7 @@
                               title="Open in Modal">
                         ⛶
                       </button>
-                      <button class="delete-btn" 
+                      <button class="close-btn" 
                               (click)="onAreaItemDelete(area); $event.stopPropagation()" 
                               (mousedown)="$event.stopPropagation()"
                               title="Delete">×</button>
@@ -100,7 +100,7 @@
                               title="Open in Modal">
                         ⛶
                       </button>
-                      <button class="delete-btn" 
+                      <button class="close-btn" 
                               (click)="onAreaItemDelete(area); $event.stopPropagation()" 
                               (mousedown)="$event.stopPropagation()"
                               title="Delete">×</button>
@@ -169,7 +169,7 @@
 <!-- Expanded Widget Overlay -->
 <div *ngIf="expandedWidget" class="widget-overlay" (click)="closeExpandedWidget()">
   <div class="expanded-widget-container" (click)="$event.stopPropagation()">
-    <div class="expanded-header">
+    <div class="expanded-header" [ngStyle]="{'background': backgroundGradient, 'color': areaNumberTextColor}">>
       <h3>{{ expandedWidget.name }} - Area {{ expandedWidget.areaNumber }}</h3>
       <button class="close-btn" (click)="closeExpandedWidget()" title="Collapse to Widget">⊟</button>
     </div>

@@ -39,7 +39,7 @@
       <a 
         class="tools-tab" 
         [class.active]="activeTab === 'admin'" 
-        routerLink="/listener"
+        routerLink="/projects"
         (click)="activeTab = 'admin'">
         Projects
       </a>
@@ -62,9 +62,7 @@
 </header>
 
 <body>
-  <h1>Welcome to eBusiness</h1>
-  <p>Your content goes here.</p>
-  <main class="main-content">
+    <main class="main-content">
     <router-outlet></router-outlet><!-- Main content goes here -->
   </main>
 </body>
