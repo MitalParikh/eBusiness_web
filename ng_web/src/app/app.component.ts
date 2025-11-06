@@ -6,14 +6,15 @@ import { ProjectGridComponent } from './admin/tools/project-grid.component';
 import { AuthService } from './services/auth.service';
 import { User } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
-
+import { DynamicHeaderThemeDirective } from './shared/directives/dynamic-header-theme.directive';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, ProjectGridComponent],
+  imports: [RouterOutlet, RouterLink, CommonModule, ProjectGridComponent, DynamicHeaderThemeDirective],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  host: {ngSkipHydration: 'true'},
 })
 export class AppComponent implements OnInit {
   showMenu = false;

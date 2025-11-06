@@ -15,6 +15,7 @@ export interface SchedulerData {
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './scheduler.component.html',
+  host: {ngSkipHydration: 'true'},
   styleUrls: ['./scheduler.component.css']
 })
 export class SchedulerComponent {

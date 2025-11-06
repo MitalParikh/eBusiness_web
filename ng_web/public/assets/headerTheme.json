@@ -1,0 +1,15 @@
+[
+    {"img": "assets/img5.jpg", 
+     "gradient": "linear-gradient(145deg,  #fadbadff 0%, #f4a679e5 30%, #3c1955ff 100%)",
+     "themeKey": "default"
+    }
+   ,  
+    {"img": "assets/img7.jpg", 
+     "gradient": "linear-gradient(75deg, #682d10f4 0%, #f8f5ebf1 50%, #bb5114e5 100%)",
+     "themeKey": "antelop"
+    },
+    {"img": "assets/img6.JPG", 
+     "gradient": "linear-gradient(155deg, #66b7ea 0%, #4b92a2 50%, #93fbe4 100%)",
+     "themeKey": "ocean"
+    }
+]

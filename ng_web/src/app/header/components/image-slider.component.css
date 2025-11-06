@@ -1,0 +1,51 @@
+/* Header Slider Styles */
+.header-slider {
+  position: relative;
+  width: 100vw;
+  height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.slider-image {
+  width: 100vw;
+  height: 125px;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  cursor: pointer;
+  will-change: opacity;
+}
+
+/* Keep previous slide visible during fade to avoid flicker */
+.slider-image.active {
+  opacity: 1;
+  z-index: 2;
+  position: relative;
+}
+
+.slider-image.fading-out {
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.6s ease-in-out;
+  position: absolute;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .header-slider {
+    height: 100px;
+  }
+  
+  .slider-image {
+    height: 100px;
+  }
+}

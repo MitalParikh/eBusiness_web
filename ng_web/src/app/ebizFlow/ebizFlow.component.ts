@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, afterRender, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService, Order } from '../services/order.service';
-import { HeaderThemeService, HeaderTheme } from '../services/header-theme.service';
+import { HeaderThemeService } from '../header/services/header-theme.service';
 import { Subscription } from 'rxjs';
 import { SchedulerComponent, SchedulerData } from '../scheduler';
+import { DynamicHeaderThemeDirective } from '../shared/directives/dynamic-header-theme.directive';
 
 interface ToolItem {
   id: string;
@@ -31,11 +32,11 @@ interface DroppedItem {
 @Component({
   selector: 'app-ebizFlow',
   standalone: true,
-  imports: [CommonModule, FormsModule, SchedulerComponent],
+  imports: [CommonModule, FormsModule, SchedulerComponent, DynamicHeaderThemeDirective],
   templateUrl: './ebizFlow.component.html',
-  styleUrls: ['./ebizFlow.component.css']
+  styleUrls: ['./ebizFlow.component.css'],
 })
-export class EbizFlowComponent implements OnInit, OnDestroy {
+export class EbizFlowComponent implements OnInit {
   
   tools: ToolItem[] = [
     {
@@ -85,18 +86,22 @@ export class EbizFlowComponent implements OnInit, OnDestroy {
     participants: ''
   };
 
-  backgroundGradient = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+  // backgroundGradient = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
   areaNumberTextColor = 'white';
-  private themeSub: Subscription;
+  backgroundGradient = signal<string>('');
+
+  // private themeSub: Subscription;
 
   constructor(private orderService: OrderService, private headerThemeService: HeaderThemeService) {
-    this.themeSub = this.headerThemeService.theme$.subscribe((theme: HeaderTheme) => {
-      this.backgroundGradient = theme.gradient;
-      // Set area number text color based on gradient
-      this.areaNumberTextColor = this.getAreaNumberTextColor(theme.gradient);
-    });
+    // this.themeSub = this.headerThemeService.theme$.subscribe((theme: HeaderTheme) => {
+    //   this.backgroundGradient = theme.gradient;
+    //   // Set area number text color based on gradient
+    //   this.areaNumberTextColor = this.getAreaNumberTextColor(theme.gradient);
+    // });
+    effect(() => {
+      this.backgroundGradient.update(() => this.headerThemeService.gradient());
+  });
   }
-
   private getAreaNumberTextColor(gradient: string): string {
     // For img7 gradient, use black text when gradient contains white/light shades
     if ( /f[0-9a-f]{5}f[0-9a-f]/i.test(gradient)) {
@@ -108,14 +113,17 @@ export class EbizFlowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Initialize dropping areas
+    console.log(this.backgroundGradient);
     this.initializeDroppingAreas();
+    // this.backgroundGradient.set((HeaderTheme as any).default.value.gradient);
+    this.backgroundGradient.set(this.headerThemeService.gradient());
   }
 
-  ngOnDestroy(): void {
-    if (this.themeSub) {
-      this.themeSub.unsubscribe();
-    }
-  }
+  // ngOnDestroy(): void {
+  //   if (this.themeSub) {
+  //     this.themeSub.unsubscribe();
+  //   }
+  // }
 
   initializeDroppingAreas(): void {
     this.droppingAreas = [];
@@ -381,19 +389,19 @@ export class EbizFlowComponent implements OnInit, OnDestroy {
   }
 
   private handleItemReposition(x: number, y: number): void {
-    if (!this.draggedItem) return;
+    // if (!this.draggedItem) return;
 
-    // Get workspace dimensions for boundary checking
-    const workspaceElement = document.querySelector('.workspace') as HTMLElement;
-    const workspaceRect = workspaceElement?.getBoundingClientRect();
+    // // Get workspace dimensions for boundary checking
+    // const workspaceElement = document.querySelector('.workspace') as HTMLElement;
+    // const workspaceRect = workspaceElement?.getBoundingClientRect();
     
-    const maxX = workspaceRect ? workspaceRect.width - this.draggedItem.width : 800;
-    const maxY = workspaceRect ? workspaceRect.height - this.draggedItem.height : 600;
+    // const maxX = workspaceRect ? workspaceRect.width - this.draggedItem.width : 800;
+    // const maxY = workspaceRect ? workspaceRect.height - this.draggedItem.height : 600;
 
-    this.draggedItem.x = Math.max(0, Math.min(x, maxX));
-    this.draggedItem.y = Math.max(0, Math.min(y, maxY));
+    // this.draggedItem.x = Math.max(0, Math.min(x, maxX));
+    // this.draggedItem.y = Math.max(0, Math.min(y, maxY));
     
-    console.log(`Repositioned ${this.draggedItem.name} to (${this.draggedItem.x}, ${this.draggedItem.y})`);
+    // console.log(`Repositioned ${this.draggedItem.name} to (${this.draggedItem.x}, ${this.draggedItem.y})`);
   }
 
   selectItem(item: DroppedItem): void {

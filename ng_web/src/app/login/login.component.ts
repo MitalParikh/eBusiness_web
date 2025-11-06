@@ -11,7 +11,8 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  host: {ngSkipHydration: 'true'}
 })
 export class LoginComponent implements OnDestroy {
   isLoading = false;

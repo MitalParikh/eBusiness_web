@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-home-page',
   standalone: true,
   imports: [CommonModule],
+  host: {ngSkipHydration: 'true'},
   template: `
     <div class="home-page" [ngStyle]="{'background': backgroundGradient}">
       <h2>Welcome to eBusiness!</h2>

@@ -1,0 +1,102 @@
+.project-grid-bg {
+  width: 100vw;
+  max-height: 70%;
+  background: #f8f9fa;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(52, 152, 219, 0.08);
+  padding: 2rem;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.project-grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+  border: 1px solid #e1e5e9;
+}
+
+.project-grid th,
+.project-grid td {
+  padding: 0.25rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e1e5e9;
+  border-right: 1px solid #e1e5e9;
+}
+
+.project-grid th:last-child,
+.project-grid td:last-child {
+  border-right: none;
+}
+
+.project-grid tr:last-child td {
+  border-bottom: none;
+}
+
+.project-grid tbody tr:hover {
+  background: #f0f4ff;
+  transition: background 0.2s;
+}
+
+.project-grid td button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.project-grid td button:hover {
+  background: linear-gradient(135deg, #764ba2, #667eea);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+}
+
+.project-grid td {
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.project-grid .status {
+  font-weight: bold;
+  color: #388e3c;
+}
+
+.project-grid .status-grayed {
+  color: #b0b4b9;
+  font-style: italic;
+}
+
+.project-grid .action-btn {
+  padding: 0.4rem 1.1rem;
+  border: none;
+  border-radius: 20px;
+  background: #3f51b5;
+  color: #fff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.project-grid .action-btn:hover {
+  background: #283593;
+}
+
+.project-grid .autostartup-yes {
+  color: #388e3c;
+  font-weight: 600;
+}
+
+.project-grid .autostartup-no {
+  color: #d32f2f;
+  font-weight: 600;
+}

@@ -22,8 +22,9 @@
   </div>
 
   <!-- Main Workspace -->
-  <div class="workspace-container" [ngStyle]="{'background': backgroundGradient}">
+  <div [dynamicHeaderTheme]="backgroundGradient" class="workspace-container" >
       <!-- Workspace Controls -->
+
       <div class="workspace-controls">
         <select class="workspace-dropdown" [(ngModel)]="selectedMode" (ngModelChange)="onModeChange()">
           <option value="create-new">Create New</option>

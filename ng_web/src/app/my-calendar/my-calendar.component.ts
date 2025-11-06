@@ -7,6 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 @Component({
   selector: 'app-my-calendar',
   templateUrl: './my-calendar.component.html',
+  host: {ngSkipHydration: 'true'},
   styleUrls: ['./my-calendar.component.css']
 })
 
