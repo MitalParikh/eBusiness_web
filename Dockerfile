@@ -1,4 +1,5 @@
-FROM tomcat:10.1-jdk17-temurin
-COPY target/web_ocp-0.0.1.war /usr/local/tomcat/webapps/
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY target/web_ocp-0.0.1.war web_ocp.war
 EXPOSE 8080
-CMD ["catalina.sh", "run"]
+CMD ["java", "-jar", "web_ocp.war"]
