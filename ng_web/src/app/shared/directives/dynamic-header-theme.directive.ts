@@ -1,4 +1,4 @@
-import { Directive, ElementRef, afterRender , effect, Renderer2, Signal, signal, input } from '@angular/core';
+import { Directive, ElementRef, effect} from '@angular/core';
 import { HeaderThemeService } from '../../header/services/header-theme.service';
 
 
@@ -13,11 +13,10 @@ export class DynamicHeaderThemeDirective {
     private headerThemeService: HeaderThemeService,
   ) {
       effect(() => {
-        console.log("changing header theme index");
-        this.el.nativeElement.style.background = this.dynamicHeaderTheme();
-        this.el.nativeElement.style.color = /f[0-9a-f]{5}f[0-9a-f]/i.test(this.dynamicHeaderTheme()) ? 'black' : 'white';
+        const value = this.headerThemeService.gradientSignal();
+        console.log("changing header theme gradient", value);
+        this.el.nativeElement.style.background = value;
+        this.el.nativeElement.style.color = /f[0-9a-f]{5}f[0-9a-f]/i.test(value) ? 'black' : 'white';
       });
     }
-
-    dynamicHeaderTheme = input<string>('');
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, afterRender, effect, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService, Order } from '../services/order.service';

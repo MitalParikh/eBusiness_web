@@ -1,4 +1,4 @@
-<div class="project-grid-bg" [DynamicHeaderTheme]="backgroundGradient()">
+<div class="project-grid-bg" dynamicHeaderTheme>
   <table class="project-grid">
     <thead>
       <tr>
@@ -19,7 +19,7 @@
         
           <td [ngClass]="{'status-grayed': !project.action[i] || project.action[i] === 'Initiate' || project.action[i] === 'Complete'}">{{ status }}</td>
           <td>
-            <button *ngIf="project.action[i] && project.action[i] !== 'Start'" [DynamicHeaderTheme]="backgroundGradient()">{{ project.action[i] }}</button>
+            <button *ngIf="project.action[i] && project.action[i] !== 'Start'" dynamicHeaderTheme>{{ project.action[i] }}</button>
           </td>
         </tr>
       </ng-container>

@@ -1,4 +1,4 @@
-<div class="login-container" [dynamicHeaderTheme]="backgroundGradient()">
+<div class="login-container" dynamicHeaderTheme>
   <div class="login-card">
     <div class="login-header">
       <!-- <h1>Welcome to eBusiness</h1> -->
@@ -53,7 +53,7 @@
         <button 
           type="submit"
           class="email-signin-btn"
-          [dynamicHeaderTheme]="backgroundGradient()"
+          dynamicHeaderTheme
           [disabled]="isLoading">
           <div class="btn-content">
             <div *ngIf="isLoading" class="loading-spinner"></div>

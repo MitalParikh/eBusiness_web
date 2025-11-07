@@ -1,13 +1,13 @@
 <div  class="header-slider">
   
   <!-- Images clickable to advance slider; cross-fade without flicker -->
-  @for (theme of headerTheme; track theme.key; let i = $index) {
+  @for (entry of sliderImages; track entry.themeKey; let i = $index) {
   <img
-       [src]="theme.value.img"
-       [alt]="'Slide_' + (theme.key)"
+       [src]="entry.img"
+       [alt]="'Slide_' + ((i+1) % sliderImages.length)"
        class="slider-image"
-       [class.active]="theme.key === currentThemeKey()"
-       [class.fading-out]="theme.key === fadingOutImgKey"
-       (click)="onImageClick(headerTheme[(i+1) % headerTheme.length].key)" />
+       [class.active]="entry.themeKey === currentThemeKey()"
+       [class.fading-out]="entry.themeKey === fadingOutImgKey"
+       (click)="onImageClick(sliderImages[(i+1) % sliderImages.length].themeKey)" />
   }
 </div>

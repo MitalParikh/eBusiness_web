@@ -29,7 +29,7 @@ export class ProjectGridComponent {
     // Add more rows as needed
   ];
   backgroundGradient = signal<string>('');
-  buttonTextColor = 'white';
+  // buttonTextColor = 'white';
   
   constructor() {}
 }

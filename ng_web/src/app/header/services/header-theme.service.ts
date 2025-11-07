@@ -1,5 +1,4 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import * as HeaderThemeEntries from '../../../environments/headerTheme';
 
 export interface ThemeEntry {
@@ -13,42 +12,31 @@ export interface ThemeEntry {
 export class HeaderThemeService {
   private _themeKey: WritableSignal<string> = signal('default');
   public themeKey = this._themeKey.asReadonly();
+
+  private _gradient: WritableSignal<string> = signal('');
+  public gradientSignal = this._gradient.asReadonly();
   
   private themeEntries: ThemeEntry[] = HeaderThemeEntries.headerThemeEntries;
-  /*(() => {
-    const raw = (HeaderTheme as any) ?? {};
-    const entries: ThemeEntry[] = [];
-
-    // initializeThemeData() {
-    // If the JSON export is an array
-    if (Array.isArray(raw)) {
-      raw.forEach((item: any, idx: number) => {
-        entries.push({
-          img: item?.img ?? '',
-          gradient: item?.gradient ?? '',
-          themeKey: item?.themeKey ?? item?.themeName ?? String(idx)
-        });
-      });
-      console.log("entries : ", entries.forEach(entry => console.log(JSON.stringify(entry))));
-      return entries;
-    }
-
-    return [{ img: raw.img, gradient: raw.gradient, themeKey: 'default' }];
-  })();*/
-
+  
+  public getKeyedImages(): ThemeEntry[] {
+    return this.themeEntries;
+  }
 
   public updateThemeKey(themekey: string): void {
+    console.log("HeaderThemeService: updating theme key to", themekey);
     this._themeKey.set(themekey);
+    this.updateGradient();
+  }
+
+  private updateGradient(): void {
+    const entry = this.themeEntry();
+    this._gradient.set(entry ? entry.gradient : this.themeEntries[0].gradient);
   }
 
   private themeEntry(): ThemeEntry | undefined {
     return this.themeEntries.find(entry => entry.themeKey === this.themeKey());
   }
 
-  public gradient(): string {
-    const entry = this.themeEntry();
-    console.log("entry : ", JSON.stringify(entry));
-    return entry ? entry.gradient : this.themeEntries[0].gradient;
-  }
+  
 
 }

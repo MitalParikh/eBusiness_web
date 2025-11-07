@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, signal } from '@angular/core';
-import { HeaderThemeService, HeaderTheme } from '../../services/header-theme.service';
+import { Component, signal } from '@angular/core';
 import { DynamicHeaderThemeDirective } from '../../shared/directives';
 
 @Component({
@@ -30,29 +29,7 @@ export class ProjectGridComponent {
     // Add more rows as needed
   ];
   backgroundGradient = signal('');
-  buttonTextColor = 'white';
-  // private themeSub: Subscription;
+  // buttonTextColor = 'white';
 
-  constructor(private headerThemeService: HeaderThemeService) {
-    // this.themeSub = this.headerThemeService.theme$.subscribe((theme: HeaderTheme) => {
-    //   this.backgroundGradient = theme.gradient;
-    //   // Set button text color based on gradient
-    //   this.buttonTextColor = this.getButtonTextColor(theme.gradient);
-    // });
-  }
-
-  // private getButtonTextColor(gradient: string): string {
-  //   // For gradients with white/light shades, use black text
-  //   if (/f[0-9a-f]{5}f[0-9a-f]/i.test(gradient)) {
-  //     return 'black';
-  //   }
-  //   // Default to white for all other gradients
-  //   return 'white';
-  // }
-
-  // ngOnDestroy(): void {
-  //   if (this.themeSub) {
-  //     this.themeSub.unsubscribe();
-  //   }
-  // }
+  constructor() {}
 }

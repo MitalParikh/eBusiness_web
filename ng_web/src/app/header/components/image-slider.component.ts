@@ -1,7 +1,6 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderThemeService } from '../services/header-theme.service';
-import * as HeaderTheme from '../../../../public/assets/headerTheme.json';
+import { HeaderThemeService, ThemeEntry} from '../services/header-theme.service';
 
 interface HeaderThemeEntry {
   [key: string]: { img: string; gradient: string };
@@ -18,40 +17,40 @@ interface HeaderThemeEntry {
 
 export class ImageSliderComponent implements OnInit {
   // @Output() slideChanged = new EventEmitter<number>();
-  currentThemeKey = signal('default');
+  currentThemeKey = signal('');
 
 
-  headerTheme: HeaderThemeEntry[] = []
+  sliderImages: ThemeEntry[] = []
   
   fadingOutImgKey: string | null = null;
   transitionMs = 600;
 
   constructor(private headerThemeService: HeaderThemeService) {
-    // this.preloadImages();
+    // effect(() => {
+    //   const newKey = this.currentThemeKey();
+    //   console.log('ImageSliderComponent: currentThemeKey changed to', newKey);
+    //   this.headerThemeService.updateThemeKey(this.currentThemeKey());
+    // });
+
   }
 
   ngOnInit(): void {
-    this.headerTheme = (HeaderTheme as any).default;
+    this.sliderImages = this.headerThemeService.getKeyedImages();
+    console.log('ImageSliderComponent: loaded sliderImages', this.sliderImages.length);
+    this.currentThemeKey.set(this.headerThemeService.themeKey());
   }
 
-  // preloadImages(): void {
-  //   let sliderImages = HeaderTheme.map(item => Object.values(item)[0].img).concat();
-  //   sliderImages.forEach(src => {
-  //     const img = new Image();
-  //     img.src = src; // browser caches; reduces flicker when showing
-  //   });
-  // }
-
   // When image is clicked, advance to the next image
-  onImageClick(currThemeKey: string): void {
-    console.log('ImageSliderComponent: onImageClick - changing to theme key', currThemeKey);
+  onImageClick(changedThemeKey: string): void {
+    console.log('ImageSliderComponent: changing to theme key', changedThemeKey);
     setTimeout(() => {
       // clear fading out after animation completes
-      if (currThemeKey === this.fadingOutImgKey) {
+      if (changedThemeKey === this.fadingOutImgKey) {
         this.fadingOutImgKey = null;
       }
     }, this.transitionMs);
-    this.currentThemeKey.set(currThemeKey);
-    this.headerThemeService.updateThemeKey(this.currentThemeKey());
+    this.currentThemeKey.update(() => changedThemeKey);
+    this.headerThemeService.updateThemeKey(changedThemeKey);
+    
   }
 }

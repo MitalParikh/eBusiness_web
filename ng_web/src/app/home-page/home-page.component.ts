@@ -1,4 +1,4 @@
-import { Component, OnDestroy, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DynamicHeaderThemeDirective } from '../shared/directives';
 
@@ -8,7 +8,7 @@ import { DynamicHeaderThemeDirective } from '../shared/directives';
   imports: [CommonModule, DynamicHeaderThemeDirective],
   host: {ngSkipHydration: 'true'},
   template: `
-    <div class="home-page" [DynamicHeaderTheme]="backgroundGradient()">
+    <div class="home-page" dynamicHeaderTheme>
       <h2>Welcome to eBusiness!</h2>
       <p>This is the home page of your application.</p>
     </div>
