@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 import { HeaderThemeService, HeaderTheme } from '../../services/header-theme.service';
-import { Subscription } from 'rxjs';
+import { DynamicHeaderThemeDirective } from '../../shared/directives';
 
 @Component({
   selector: 'app-project-grid',
@@ -9,9 +9,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './project-grid.component.html',
   styleUrls: ['./project-grid.component.css'],
   host: {ngSkipHydration: 'true'},
-  imports: [CommonModule]
+  imports: [CommonModule, DynamicHeaderThemeDirective]
 })
-export class ProjectGridComponent implements OnDestroy {
+export class ProjectGridComponent {
   projects = [
     {
       projectID: "Abby's Mansion",
@@ -29,30 +29,30 @@ export class ProjectGridComponent implements OnDestroy {
     }
     // Add more rows as needed
   ];
-  backgroundGradient = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+  backgroundGradient = signal('');
   buttonTextColor = 'white';
-  private themeSub: Subscription;
+  // private themeSub: Subscription;
 
   constructor(private headerThemeService: HeaderThemeService) {
-    this.themeSub = this.headerThemeService.theme$.subscribe((theme: HeaderTheme) => {
-      this.backgroundGradient = theme.gradient;
-      // Set button text color based on gradient
-      this.buttonTextColor = this.getButtonTextColor(theme.gradient);
-    });
+    // this.themeSub = this.headerThemeService.theme$.subscribe((theme: HeaderTheme) => {
+    //   this.backgroundGradient = theme.gradient;
+    //   // Set button text color based on gradient
+    //   this.buttonTextColor = this.getButtonTextColor(theme.gradient);
+    // });
   }
 
-  private getButtonTextColor(gradient: string): string {
-    // For gradients with white/light shades, use black text
-    if (/f[0-9a-f]{5}f[0-9a-f]/i.test(gradient)) {
-      return 'black';
-    }
-    // Default to white for all other gradients
-    return 'white';
-  }
+  // private getButtonTextColor(gradient: string): string {
+  //   // For gradients with white/light shades, use black text
+  //   if (/f[0-9a-f]{5}f[0-9a-f]/i.test(gradient)) {
+  //     return 'black';
+  //   }
+  //   // Default to white for all other gradients
+  //   return 'white';
+  // }
 
-  ngOnDestroy(): void {
-    if (this.themeSub) {
-      this.themeSub.unsubscribe();
-    }
-  }
+  // ngOnDestroy(): void {
+  //   if (this.themeSub) {
+  //     this.themeSub.unsubscribe();
+  //   }
+  // }
 }

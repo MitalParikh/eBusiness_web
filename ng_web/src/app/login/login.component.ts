@@ -1,42 +1,31 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { HeaderThemeService, HeaderTheme } from '../services/header-theme.service';
-import { Subscription } from 'rxjs';
+import { DynamicHeaderThemeDirective } from '../shared/directives/dynamic-header-theme.directive';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DynamicHeaderThemeDirective],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   host: {ngSkipHydration: 'true'}
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent {
   isLoading = false;
   errorMessage = '';
   authMode: 'signin' | 'signup' = 'signin';
   email = '';
   password = '';
   confirmPassword = '';
-  backgroundGradient = 'linear-gradient(135deg, #66b7ea 0%, #4b92a2 50%, #93fbe4 100%)';
-  private themeSub: Subscription;
+  backgroundGradient = signal<string>('');
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private headerThemeService: HeaderThemeService
-  ) {
-    this.themeSub = this.headerThemeService.theme$.subscribe((theme: HeaderTheme) => {
-      this.backgroundGradient = theme.gradient;
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.themeSub) this.themeSub.unsubscribe();
-  }
+    private router: Router
+  ) {}
 
   toggleAuthMode(): void {
     this.authMode = this.authMode === 'signin' ? 'signup' : 'signin';

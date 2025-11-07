@@ -2,8 +2,6 @@ import { Component, OnInit, OnDestroy, afterRender, effect, signal } from '@angu
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService, Order } from '../services/order.service';
-import { HeaderThemeService } from '../header/services/header-theme.service';
-import { Subscription } from 'rxjs';
 import { SchedulerComponent, SchedulerData } from '../scheduler';
 import { DynamicHeaderThemeDirective } from '../shared/directives/dynamic-header-theme.directive';
 
@@ -86,44 +84,18 @@ export class EbizFlowComponent implements OnInit {
     participants: ''
   };
 
-  // backgroundGradient = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
   areaNumberTextColor = 'white';
   backgroundGradient = signal<string>('');
 
   // private themeSub: Subscription;
 
-  constructor(private orderService: OrderService, private headerThemeService: HeaderThemeService) {
-    // this.themeSub = this.headerThemeService.theme$.subscribe((theme: HeaderTheme) => {
-    //   this.backgroundGradient = theme.gradient;
-    //   // Set area number text color based on gradient
-    //   this.areaNumberTextColor = this.getAreaNumberTextColor(theme.gradient);
-    // });
-    effect(() => {
-      this.backgroundGradient.update(() => this.headerThemeService.gradient());
-  });
-  }
-  private getAreaNumberTextColor(gradient: string): string {
-    // For img7 gradient, use black text when gradient contains white/light shades
-    if ( /f[0-9a-f]{5}f[0-9a-f]/i.test(gradient)) {
-      return 'black';
-    }
-    // Default to white for all other gradients
-    return 'white';
-  }
-
+  constructor(private orderService: OrderService) {}
+  
   ngOnInit(): void {
     // Initialize dropping areas
     console.log(this.backgroundGradient);
     this.initializeDroppingAreas();
-    // this.backgroundGradient.set((HeaderTheme as any).default.value.gradient);
-    this.backgroundGradient.set(this.headerThemeService.gradient());
   }
-
-  // ngOnDestroy(): void {
-  //   if (this.themeSub) {
-  //     this.themeSub.unsubscribe();
-  //   }
-  // }
 
   initializeDroppingAreas(): void {
     this.droppingAreas = [];

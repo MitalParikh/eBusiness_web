@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { DynamicHeaderThemeDirective } from '../../shared/directives/dynamic-header-theme.directive';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-grid',
@@ -29,7 +28,7 @@ export class ProjectGridComponent {
     }
     // Add more rows as needed
   ];
-  backgroundGradient = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+  backgroundGradient = signal<string>('');
   buttonTextColor = 'white';
   
   constructor() {}

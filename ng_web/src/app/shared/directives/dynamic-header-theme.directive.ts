@@ -14,11 +14,10 @@ export class DynamicHeaderThemeDirective {
   ) {
       effect(() => {
         console.log("changing header theme index");
-        // this.theme.set((HeaderTheme as any).this.headerThemeService.themeKey().value);
-        this.el.nativeElement.style.background = this.gradient();
-        // this.renderer.setStyle(this.el.nativeElement, 'color', /f[0-9a-f]{5}f[0-9a-f]/i.test(this.theme.gradient) ? 'black' : 'white');
+        this.el.nativeElement.style.background = this.dynamicHeaderTheme();
+        this.el.nativeElement.style.color = /f[0-9a-f]{5}f[0-9a-f]/i.test(this.dynamicHeaderTheme()) ? 'black' : 'white';
       });
     }
 
-    gradient = input<string>('');
+    dynamicHeaderTheme = input<string>('');
 }

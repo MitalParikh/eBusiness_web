@@ -1,4 +1,4 @@
-<div class="project-grid-bg" [ngStyle]="{'background': backgroundGradient, 'minHeight': '100vh', 'width': '100vw'}">
+<div class="project-grid-bg" [DynamicHeaderTheme]="backgroundGradient()">
   <table class="project-grid">
     <thead>
       <tr>
@@ -19,7 +19,7 @@
         
           <td [ngClass]="{'status-grayed': !project.action[i] || project.action[i] === 'Initiate' || project.action[i] === 'Complete'}">{{ status }}</td>
           <td>
-            <button *ngIf="project.action[i] && project.action[i] !== 'Start'" [ngStyle]="{'background': backgroundGradient, 'color': buttonTextColor}">{{ project.action[i] }}</button>
+            <button *ngIf="project.action[i] && project.action[i] !== 'Start'" [DynamicHeaderTheme]="backgroundGradient()">{{ project.action[i] }}</button>
           </td>
         </tr>
       </ng-container>

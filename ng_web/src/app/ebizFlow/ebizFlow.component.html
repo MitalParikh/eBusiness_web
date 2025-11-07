@@ -22,7 +22,7 @@
   </div>
 
   <!-- Main Workspace -->
-  <div [dynamicHeaderTheme]="backgroundGradient" class="workspace-container" >
+  <div [dynamicHeaderTheme]="backgroundGradient()" class="workspace-container" >
       <!-- Workspace Controls -->
 
       <div class="workspace-controls">
@@ -50,7 +50,7 @@
             (dragenter)="onAreaDragEnter($event, area)"
             (dragleave)="onAreaDragLeave($event, area)"
             (drop)="onAreaDrop($event, area)">
-            <div class="area-number" [ngStyle]="{'background': backgroundGradient, 'color': areaNumberTextColor}">{{ area.number }}</div>
+            <div class="area-number" [dynamicHeaderTheme]="backgroundGradient()">{{ area.number }}</div>
             <div class="area-content" *ngIf="area.droppedItem">
               <!-- Widget view -->
               <div class="widget-container" 
@@ -156,13 +156,13 @@
         </div>
         
         <!-- Drop Zone Hint (only when no areas have content) -->
-        <div *ngIf="!hasAnyContent()" class="drop-zone-hint">
+        <!-- <div *ngIf="!hasAnyContent()" class="drop-zone-hint">
           <div class="hint-content">
             <div class="hint-icon">🎯</div>
             <h3>Drop tools in numbered areas to start building your workflow</h3>
             <p>Drag and drop tools from the left panel into the numbered grid areas</p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 </div>
@@ -170,7 +170,7 @@
 <!-- Expanded Widget Overlay -->
 <div *ngIf="expandedWidget" class="widget-overlay" (click)="closeExpandedWidget()">
   <div class="expanded-widget-container" (click)="$event.stopPropagation()">
-    <div class="expanded-header" [ngStyle]="{'background': backgroundGradient, 'color': areaNumberTextColor}">>
+    <div class="expanded-header" [dynamicHeaderTheme]="backgroundGradient()">>
       <h3>{{ expandedWidget.name }} - Area {{ expandedWidget.areaNumber }}</h3>
       <button class="close-btn" (click)="closeExpandedWidget()" title="Collapse to Widget">⊟</button>
     </div>
