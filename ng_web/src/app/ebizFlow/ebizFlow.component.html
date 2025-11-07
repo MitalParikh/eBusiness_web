@@ -7,8 +7,8 @@
       <h3>Tools</h3>
     </div>
     <div class="tools-list">
+    @for (tool of tools; track tool.name) {
       <div 
-        *ngFor="let tool of tools" 
         class="tool-item"
         draggable="true"
         (dragstart)="onDragStart($event, tool)"
@@ -16,6 +16,7 @@
         <div class="tool-icon">{{ tool.icon }}</div>
         <div class="tool-name">{{ tool.name }}</div>
       </div>
+    }
     </div>
     
     
@@ -41,8 +42,8 @@
         <!-- Grid of Dropping Areas -->
         <div class="dropping-areas-grid">
           <!-- Numbered dropping areas -->
+          @for (area of droppingAreas; track area.number) {
           <div 
-            *ngFor="let area of droppingAreas" 
             class="dropping-area"
             [class.occupied]="area.hasContent"
             [class.drag-over]="area.isDragOver"
@@ -51,7 +52,9 @@
             (dragleave)="onAreaDragLeave($event, area)"
             (drop)="onAreaDrop($event, area)">
             <div class="area-number" dynamicHeaderTheme>{{ area.number }}</div>
-            <div class="area-content" *ngIf="area.droppedItem">
+            @defer(when area.droppedItem) {
+            @if(area.droppedItem) {
+            <div class="area-content">
               <!-- Widget view -->
               <div class="widget-container" 
                    draggable="true"
@@ -59,7 +62,8 @@
                    (dragend)="onWidgetDragEnd($event)"
                    [title]="'Drag to move ' + area.droppedItem.name">
                 <!-- Scheduler Component -->
-                <div *ngIf="area.droppedItem.type === 'scheduler'" class="compact-widget scheduler-compact">
+                @if (area.droppedItem.type === 'scheduler') {
+                <div class="compact-widget scheduler-compact">
                   <div class="compact-header">
                     <span class="widget-icon">{{ area.droppedItem.icon }}</span>
                     <span class="widget-title">{{ area.droppedItem.name }}</span>
@@ -88,9 +92,10 @@
                     </app-scheduler>
                   </div>
                 </div>
+                } @else if(area.droppedItem.type === 'order-form') {
 
                 <!-- Order Form Component -->
-                <div *ngIf="area.droppedItem.type === 'order-form'" class="compact-widget order-form-compact">
+                <div class="compact-widget order-form-compact">
                   <div class="compact-header">
                     <span class="widget-icon">{{ area.droppedItem.icon }}</span>
                     <span class="widget-title">{{ area.droppedItem.name }}</span>
@@ -142,43 +147,47 @@
                     </div>
                   </div>
                 </div>
+                }
               </div>
             </div>
-            <div class="area-placeholder" *ngIf="!area.droppedItem">
+            } @else {
+              <div class="area-placeholder">
+                Drop tools here
+              </div>
+            }
+            } @placeholder {
+            <div class="area-placeholder">
               Drop tools here
             </div>
+            } 
           </div>
           
+          }
           <!-- Add new area button -->
           <div class="add-area-btn" (click)="addNewDroppingArea()" title="Add New Area">
             <div class="add-icon">+</div>
           </div>
-        </div>
-        
-        <!-- Drop Zone Hint (only when no areas have content) -->
-        <!-- <div *ngIf="!hasAnyContent()" class="drop-zone-hint">
-          <div class="hint-content">
-            <div class="hint-icon">🎯</div>
-            <h3>Drop tools in numbered areas to start building your workflow</h3>
-            <p>Drag and drop tools from the left panel into the numbered grid areas</p>
           </div>
-        </div> -->
+          
+          
+          
       </div>
-    </div>
+  </div>
 </div>
 
 <!-- Expanded Widget Overlay -->
-<div *ngIf="expandedWidget" class="widget-overlay" (click)="closeExpandedWidget()">
+ @if (expandedWidget) {
+<div class="widget-overlay" (click)="closeExpandedWidget()">
   <div class="expanded-widget-container" (click)="$event.stopPropagation()">
-    <div class="expanded-header" dynamicHeaderTheme]>
+    <div class="expanded-header" dynamicHeaderTheme>
       <h3>{{ expandedWidget.name }} - Area {{ expandedWidget.areaNumber }}</h3>
       <button class="close-btn" (click)="closeExpandedWidget()" title="Collapse to Widget">⊟</button>
     </div>
     
     <div class="expanded-content">
       <!-- Full Scheduler Component -->
+       @if (  expandedWidget.type === 'scheduler') {
       <app-scheduler 
-        *ngIf="expandedWidget.type === 'scheduler'"
         [schedulerData]="schedulerData"
         [title]="expandedWidget.name"
         [icon]="expandedWidget.icon"
@@ -187,9 +196,10 @@
         [showDeleteButton]="false"
         (dataChange)="onSchedulerDataChange($event)">
       </app-scheduler>
+    } @else if (expandedWidget.type === 'order-form') {
 
       <!-- Full Order Form Component -->
-      <div *ngIf="expandedWidget.type === 'order-form'" class="order-form-widget expanded">
+      <div class="order-form-widget expanded">
         <div class="widget-content">
           <div class="form-group">
             <label>Order Number:</label>
@@ -223,6 +233,8 @@
           </div>
         </div>
       </div>
+    }
     </div>
   </div>
 </div>
+}
