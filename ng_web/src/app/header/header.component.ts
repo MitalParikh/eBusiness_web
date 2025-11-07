@@ -13,7 +13,8 @@ import { DynamicHeaderThemeDirective } from '../shared/directives/dynamic-header
   standalone: true,
   imports: [CommonModule, RouterLink, ImageSliderComponent, ToolsBarComponent, DynamicHeaderThemeDirective],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  host: {ngSkipHydration: 'true'}
 })
 export class HeaderComponent implements OnInit {
   activeTab = 'viewer'; // default tab

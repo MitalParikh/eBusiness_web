@@ -33,6 +33,7 @@ interface DroppedItem {
   imports: [CommonModule, FormsModule, SchedulerComponent, DynamicHeaderThemeDirective],
   templateUrl: './ebizFlow.component.html',
   styleUrls: ['./ebizFlow.component.css'],
+  host: {ngSkipHydration: 'true'}
 })
 export class EbizFlowComponent implements OnInit {
   

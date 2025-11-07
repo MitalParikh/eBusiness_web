@@ -25,7 +25,6 @@ import { DynamicHeaderThemeDirective } from '../shared/directives';
   `]
 })
 export class HomePageComponent {
-  backgroundGradient = signal<string>('');
 
   constructor() {}
 }

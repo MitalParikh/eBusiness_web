@@ -25,14 +25,7 @@ export class ImageSliderComponent implements OnInit {
   fadingOutImgKey: string | null = null;
   transitionMs = 600;
 
-  constructor(private headerThemeService: HeaderThemeService) {
-    // effect(() => {
-    //   const newKey = this.currentThemeKey();
-    //   console.log('ImageSliderComponent: currentThemeKey changed to', newKey);
-    //   this.headerThemeService.updateThemeKey(this.currentThemeKey());
-    // });
-
-  }
+  constructor(private headerThemeService: HeaderThemeService) {}
 
   ngOnInit(): void {
     this.sliderImages = this.headerThemeService.getKeyedImages();

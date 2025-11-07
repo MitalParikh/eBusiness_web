@@ -20,7 +20,6 @@ export class LoginComponent {
   email = '';
   password = '';
   confirmPassword = '';
-  backgroundGradient = signal<string>('');
 
   constructor(
     private authService: AuthService,

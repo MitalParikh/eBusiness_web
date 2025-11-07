@@ -1,4 +1,4 @@
-import { Directive, ElementRef, effect} from '@angular/core';
+import { Directive, ElementRef, OnInit, effect} from '@angular/core';
 import { HeaderThemeService } from '../../header/services/header-theme.service';
 
 
@@ -6,7 +6,7 @@ import { HeaderThemeService } from '../../header/services/header-theme.service';
   selector: '[dynamicHeaderTheme]',
   standalone: true
 })
-export class DynamicHeaderThemeDirective {
+export class DynamicHeaderThemeDirective implements OnInit {
  
   constructor(
     private el: ElementRef,
@@ -19,4 +19,8 @@ export class DynamicHeaderThemeDirective {
         this.el.nativeElement.style.color = /f[0-9a-f]{5}f[0-9a-f]/i.test(value) ? 'black' : 'white';
       });
     }
+
+  ngOnInit(): void {
+    this.headerThemeService.updateThemeKey(this.headerThemeService.themeKey());
+  }
 }

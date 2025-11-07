@@ -7,7 +7,8 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './tools-bar.component.html',
-  styleUrls: ['./tools-bar.component.css']
+  styleUrls: ['./tools-bar.component.css'],
+  host: {ngSkipHydration: 'true'}
 })
 export class ToolsBarComponent {
   @Input() activeTab = 'viewer';
