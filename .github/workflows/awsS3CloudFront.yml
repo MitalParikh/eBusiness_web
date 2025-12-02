@@ -1,0 +1,34 @@
+name: Deploy Angular App to S3 and CloudFront
+
+on:
+  push:
+    branches: [ "feature/V1" ] # Trigger the workflow on pushes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Buildah
+        uses: containers/buildah-action@v2
+        with:
+          # Use the Containerfile from the repo
+          image: angular-s3-artifacts
+          containerfiles: ./AWS-Dockerfile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+         role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
+         aws-region: us-east-2
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./dist/ebusiness s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
