@@ -10,7 +10,8 @@
 # Copy the built Angular files from the 'build' stage
 # Stage 2: 
 FROM scratch AS final-artifacts
-COPY target/web_ocp-0.0.1/WEB-INF/classes/static /app/dist/ebusiness
+WORKDIR /app
+COPY target/web_ocp-0.0.1/WEB-INF/classes/static ./dist/ebusiness
 
 # Command to sync the build files to the S3 bucket
 # This command assumes you have configured AWS credentials in the environment or via an IAM role
