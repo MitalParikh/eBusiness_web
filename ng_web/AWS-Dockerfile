@@ -1,7 +1,7 @@
 # Stage 1: Build the Angular app
 FROM node:20-slim as builder
 WORKDIR /app
-COPY ng_web/package*.json ./
+COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build -- --output-path=dist/ebusiness # Ensure the output path matches the one in the workflow
