@@ -85,8 +85,6 @@
                       [schedulerData]="schedulerData"
                       [title]="area.droppedItem.name"
                       [icon]="area.droppedItem.icon"
-                      [expanded]="true"
-                      [showHeader]="false"
                       [showDeleteButton]="false"
                       (dataChange)="onSchedulerDataChange($event)">
                     </app-scheduler>
@@ -191,7 +189,6 @@
         [schedulerData]="schedulerData"
         [title]="expandedWidget.name"
         [icon]="expandedWidget.icon"
-        [expanded]="true"
         [showHeader]="false"
         [showDeleteButton]="false"
         (dataChange)="onSchedulerDataChange($event)">

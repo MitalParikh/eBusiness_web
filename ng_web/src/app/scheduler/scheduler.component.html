@@ -1,14 +1,6 @@
 <div class="scheduler-widget">
-  <div *ngIf="showHeader" class="widget-header">
-    <span class="widget-icon">{{ icon }}</span>
-    <span class="widget-title">{{ title }}</span>
-    <button class="expand-btn" (click)="onExpandToggle()" title="{{ expanded ? 'Collapse' : 'Expand' }}">
-      {{ expanded ? '−' : '+' }}
-    </button>
-    <button *ngIf="showDeleteButton" class="delete-btn" (click)="onDelete()">×</button>
-  </div>
   
-  <div *ngIf="expanded" class="widget-content">
+  <div class="widget-content">
     <div class="form-group">
       <label for="eventTitle">Event Title:</label>
       <input 
