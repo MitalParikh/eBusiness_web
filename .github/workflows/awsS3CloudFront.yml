@@ -1,0 +1,38 @@
+name: Deploy Angular App to S3 and CloudFront
+
+on:
+  push:
+    branches:
+      - main # Trigger the workflow on pushes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Angular app with Docker
+        run: |
+          # Build the Docker image to create the 'dist' files
+          docker build -t angular-builder .
+          # Run the container to copy the built 'dist' directory to the GitHub Actions workspace
+          docker run --rm -v ${{ github.workspace }}:/app angular-builder cp -r /app/dist/angular-app-name/* /app/dist/
+        # Note: Replace 'angular-app-name' with your actual project name if necessary.
+        # You'll need a suitable Dockerfile for building the Angular app.
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1 # CloudFront requires the certificate to be in us-east-1
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./dist/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
