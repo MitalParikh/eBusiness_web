@@ -17,7 +17,7 @@ jobs:
         with:
           # Use the Containerfile from the repo
           image: angular-s3-artifacts
-          containerfiles: ./AWS-Dockerfile
+          containerfiles: ./ng-web/AWS-Dockerfile
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
