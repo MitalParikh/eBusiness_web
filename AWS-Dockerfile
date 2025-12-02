@@ -1,17 +1,17 @@
-# # Stage 1: Build the Angular app
-# FROM node:20-slim as builder
-# WORKDIR /app
-# COPY ng_web/package*.json ./
-# RUN npm install
-# COPY . .
-# RUN npm run build -- --output-path=dist/ebusiness # Ensure the output path matches the one in the workflow
+# Stage 1: Build the Angular app
+FROM node:20-slim as builder
+WORKDIR /app
+COPY ng_web/package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build -- --output-path=dist/ebusiness # Ensure the output path matches the one in the workflow
 
 # Stage 1: Temporarily just Create a minimal image to hold the final static files from target folder for now
 # Copy the built Angular files from the 'build' stage
 # Stage 2: 
-FROM scratch AS final-artifacts
-WORKDIR /app
-COPY target/web_ocp-0.0.1/WEB-INF/classes/static ./dist/ebusiness
+# FROM scratch AS final-artifacts
+# WORKDIR /app
+# COPY target/web_ocp-0.0.1/WEB-INF/classes/static ./dist/ebusiness
 
 # Command to sync the build files to the S3 bucket
 # This command assumes you have configured AWS credentials in the environment or via an IAM role
