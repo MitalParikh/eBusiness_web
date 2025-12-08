@@ -6,11 +6,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  name: build & deploy angular app on AWS S3 with cloudfront
-  runs-on: ubuntu-latest
-  environment: production
+  deploy:
+    runs-on: ubuntu-latest
 
-  steps:
+    steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
