@@ -3,15 +3,11 @@ name: Deploy Angular App to AWS ECS
 on:
   push:
     branches:
-      - main # Trigger on pushes to the main branch
+      - feature/v1 # Trigger on pushes to the mentioned branch
 
 env:
-  AWS_REGION: us-east-1                  # Set your preferred AWS region
-  ECR_REPOSITORY: angular-app-repo       # Set your Amazon ECR repository name
-  ECS_SERVICE: angular-app-service       # Set your Amazon ECS service name
-  ECS_CLUSTER: angular-app-cluster       # Set your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: .aws/task-definition.json # Path to your ECS task definition file
-  CONTAINER_NAME: angular-app-container  # Name of the container in the task definition
+  AWS_REGION: us-east-2                  # Set your preferred AWS region
+  
 
 jobs:
   deploy:
@@ -27,35 +23,57 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+      
+      - name: Check for required secrets
+        uses: actions/github-script@v6
+        with:
+        script: |
+          const GHCR = "ghcr.io";
+          if (`${{ env.IMAGE_REGISTRY }}`.startsWith(GHCR)) {
+            core.info(`Image registry is ${GHCR} - no registry password required`);
+          }
+          else {
+          core.info("A registry password is required");
+          secrets["IMAGE_REGISTRY_PASSWORD"] = `${{ secrets.IMAGE_REGISTRY_PASSWORD }}`;
+          }
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+          const missingSecrets = Object.entries(secrets).filter(([ name, value ]) => {
+          if (value.length === 0) {
+            core.error(`Secret "${name}" is not set`);
+            return true;
+          }
+          core.info(`✔️ Secret "${name}" is set`);
+          return false;
+          });
 
-      - name: Build and push Docker image to ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }} # Use the commit SHA as the image tag
+          if (missingSecrets.length > 0) {
+          core.setFailed(`❌ At least one required secret is not set in the repository. \n` +
+            "You can add it using:\n" +
+            "GitHub UI: https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository \n" +
+            "GitHub CLI: https://cli.github.com/manual/gh_secret_set \n" +
+            "Also, refer to https://github.com/redhat-actions/oc-login#getting-started-with-the-action-or-see-example");
+          }
+          else {
+          core.info(`✅ All the required secrets are set`);
+          }
+
+      - name: Setup Buildah
+        uses: containers/buildah-action@v2
+        with:
+          # Use the Containerfile from the repo
+          image: angular-s3-artifacts
+          containerfiles: ./ng-web/AWS-Dockerfile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+         role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
+         aws-region: us-east-2
+
+      - name: Deploy to S3
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          aws s3 sync ./dist/ebusiness s3://${{ secrets.S3_BUCKET_NAME }} --delete
 
-      - name: Fill in the new image ID in the ECS task definition
-        id: render-container
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.image }}
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.render-container.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true # Optional: wait for the deployment to complete
-
-      - name: Logout of Amazon ECR
-        run: docker logout ${{ steps.login-ecr.outputs.registry }}
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
