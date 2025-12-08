@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/v1 # Trigger on pushes to the mentioned branch
+  workflow_dispatch:
 
 env:
   AWS_REGION: us-east-2                  # Set your preferred AWS region
