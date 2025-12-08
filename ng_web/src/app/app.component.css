@@ -286,13 +286,13 @@ main {
   background: rgba(0, 0, 0, 0.189);
   border-color: rgba(0,0,0,0.2);
   backdrop-filter: blur(4px);
-  shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 .auth-link.primary {
   background: rgba(0, 0, 0, 0.189);
   border-color: rgba(0,0,0,0);
   backdrop-filter: blur(4px);
-  shadow: 0 0 20px rgba(0,0,0,0.2);
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
 /* Make the Login link (first auth-link, non-primary) black */
@@ -300,13 +300,39 @@ main {
   background: rgba(0, 0, 0, 0.189);
   border-color: rgba(0,0,0,0);
   backdrop-filter: blur(4px);
-  shadow: 0 0 20px rgba(0,0,0,0.2);
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 .auth-links .auth-link:first-child:hover {
   background: rgba(0, 0, 0, 0.189);
   border-color: rgba(0,0,0,0.2);
   backdrop-filter: blur(4px);
-  shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* User info styles */
+.user-info {
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.9rem;
+  background: rgba(0, 0, 0, 0.189);
+  border: 1px solid rgba(0,0,0,0);
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Logout button styles */
+.logout-btn {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.3);
+  cursor: pointer;
+}
+.logout-btn:hover {
+  background: rgba(255, 0, 0, 0.3);
+  border-color: rgba(255, 0, 0, 0.5);
 }
 
 @media (max-width: 600px) {

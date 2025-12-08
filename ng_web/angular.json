@@ -29,7 +29,8 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "src/main.server.ts"
           },
           "configurations": {
             "production": {
@@ -88,6 +89,28 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/ebusiness/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json"
+          }
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "ebusiness:build:production",
+            "serverTarget": "ebusiness:server:production",
+            "routes": [
+              "/login",
+              "/ebusiness",
+              "/",
+              "/projects",
+              "/login"
+            ]
           }
         }
       }

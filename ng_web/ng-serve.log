@@ -1,0 +1,61 @@
+
+> ebusiness@0.0.0 start
+> ng serve
+
+[33m❯[39m Building...
+[32m✔[39m Building...
+Application bundle generation failed. [2.191 seconds]
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unclosed block "for"[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/ebizFlow/ebizFlow.component.html:44:10:
+[37m      44 │           [32m@for (area of droppingAreas; track area.number) {[37m
+         ╵           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component EbizFlowComponent.
+
+    src/app/ebizFlow/ebizFlow.component.ts:35:15:
+[37m      35 │   templateUrl: [32m'./ebizFlow.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unclosed block "defer"[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/ebizFlow/ebizFlow.component.html:54:12:
+[37m      54 │             [32m@defer (when area.droppedItem) {[37m
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component EbizFlowComponent.
+
+    src/app/ebizFlow/ebizFlow.component.ts:35:15:
+[37m      35 │   templateUrl: [32m'./ebizFlow.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Invalid ICU message. Missing '}'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/ebizFlow/ebizFlow.component.html:243:0:
+[37m      243 │ [32m[37m
+          ╵ [32m^[0m
+
+  Error occurs in the template of component EbizFlowComponent.
+
+    src/app/ebizFlow/ebizFlow.component.ts:35:15:
+[37m      35 │   templateUrl: [32m'./ebizFlow.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected character "EOF" (Do you have an unescaped "{" in your template? Use "{{ '{' }}") to escape it.)[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/ebizFlow/ebizFlow.component.html:243:0:
+[37m      243 │ [32m[37m
+          ╵ [32m^[0m
+
+  Error occurs in the template of component EbizFlowComponent.
+
+    src/app/ebizFlow/ebizFlow.component.ts:35:15:
+[37m      35 │   templateUrl: [32m'./ebizFlow.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+Watch mode enabled. Watching for file changes...

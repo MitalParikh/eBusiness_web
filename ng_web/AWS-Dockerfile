@@ -1,0 +1,29 @@
+# Stage 1: Build the Angular app
+FROM node:20-slim as builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build -- --output-path=dist/ebusiness # Ensure the output path matches the one in the workflow
+
+# Stage 1: Temporarily just Create a minimal image to hold the final static files from target folder for now
+# Copy the built Angular files from the 'build' stage
+# Stage 2: 
+# FROM scratch AS final-artifacts
+# WORKDIR /app
+# COPY target/web_ocp-0.0.1/WEB-INF/classes/static ./dist/ebusiness
+
+# Command to sync the build files to the S3 bucket
+# This command assumes you have configured AWS credentials in the environment or via an IAM role
+# CMD ["sh", "-c", "aws s3 sync /app/dist/ebusiness s3://ebizflow-bucket --delete"]
+
+
+# # Stage 2: Serve the static files with Nginx (for local testing/ECS)
+# # This stage is optional for S3 deployment, but useful for a complete docker setup.
+# FROM nginx:alpine as final
+# COPY --from=builder /app/dist/ebusiness/browser/ static/
+# # You might need a custom nginx.conf for proper Angular routing
+# COPY nginx.conf /etc/nginx/nginx.conf 
+# EXPOSE 80
+# CMD ["nginx", "-g", "daemon off;"]
+

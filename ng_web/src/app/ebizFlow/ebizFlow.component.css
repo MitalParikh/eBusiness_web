@@ -1,0 +1,761 @@
+.ebizFlow-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-bottom: 2px solid #e1e5e9;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Tools Panel */
+.tools-panel {
+  position: fixed;
+  margin-top: 7%;
+  left: 0;
+  width: 20%;
+  height: 100vh;
+  background: white;
+  border-right: 2px solid #e1e5e9;
+  box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  z-index: 100;
+  padding: 1.5rem;
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary, .btn-danger {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+  background: #ecf0f1;
+  color: #2c3e50;
+  border: 1px solid #bdc3c7;
+}
+
+.btn-secondary:hover {
+  background: #d5dbdb;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn-danger:hover {
+  background: #c0392b;
+}
+
+/* Tools Panel Content */
+.tools-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #3498db;
+  z-index: 101;
+}
+
+.tools-panel h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tool-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border: 2px solid #dee2e6;
+  border-radius: 12px;
+  cursor: grab;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.tool-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  border-color: #3498db;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+
+.tool-item:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.tool-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tool-name {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.tools-help {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.tools-help h4 {
+  margin: 0 0 0.8rem 0;
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.tools-help p {
+  margin: 0.3rem 0;
+  color: #7f8c8d;
+  font-size: 0.85rem;
+}
+
+/* Workspace */
+.workspace-container {
+  position: fixed;
+  top: 10.5rem;
+  left: 20%;
+  width: 80%;
+  height: calc(100vh - 10.5rem);
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 20px 0 0 0;
+  box-shadow: 
+    0 20px 40px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.workspace-controls {
+  position: absolute;
+  top: 0.5rem;
+  left: 1.5rem;
+  z-index: 100;
+}
+
+.workspace-dropdown {
+  background: rgba(255,255,255,0.9);
+  border: 2px solid rgba(52, 152, 219, 0.2);
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #2c3e50;
+  box-shadow: 
+    0 4px 16px rgba(52, 152, 219, 0.1),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 160px;
+  backdrop-filter: blur(10px);
+}
+
+.workspace-dropdown:hover {
+  border-color: #3498db;
+  box-shadow: 
+    0 8px 24px rgba(52, 152, 219, 0.2),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  transform: translateY(-2px);
+}
+
+.workspace-dropdown:focus {
+  border-color: #3498db;
+  box-shadow: 
+    0 0 0 4px rgba(52, 152, 219, 0.2),
+    0 8px 24px rgba(52, 152, 219, 0.15);
+  transform: translateY(-1px);
+}
+
+.workspace {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow-y: auto;
+  padding: 3rem 2rem 2rem 2rem;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 200, 255, 0.1) 0%, transparent 50%);
+}
+
+.dropping-areas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 100%;
+  padding: 1rem 0;
+}
+
+.dropping-area {
+  position: relative;
+  min-height: 220px;
+  background: rgba(255,255,255,0.95);
+  border: 3px dashed rgba(52, 152, 219, 0.3);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.dropping-area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(52, 152, 219, 0.02) 0%, 
+    rgba(155, 89, 182, 0.02) 50%, 
+    rgba(52, 73, 94, 0.02) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.dropping-area:hover::before {
+  opacity: 1;
+}
+
+.dropping-area:hover {
+  border-color: rgba(52, 152, 219, 0.8);
+  background: rgba(248, 249, 255, 0.98);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 16px 48px rgba(52, 152, 219, 0.15),
+    0 8px 24px rgba(52, 152, 219, 0.1),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+/* Drop target highlighting for widget moves */
+.dropping-area.drag-over {
+  border-color: rgba(231, 76, 60, 0.8);
+  background: rgba(255, 245, 245, 0.98);
+  box-shadow: 
+    0 16px 48px rgba(231, 76, 60, 0.2),
+    0 8px 24px rgba(231, 76, 60, 0.15);
+  transform: scale(1.05);
+}
+
+.dropping-area.occupied {
+  position: relative;
+  border: 3px solid rgba(39, 174, 96, 0.6);
+  background: rgba(248, 255, 248, 0.98);
+  min-height: 260px;
+  height: 260px;
+  align-items: stretch;
+  justify-content: stretch;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 12px 40px rgba(39, 174, 96, 0.15),
+    0 4px 16px rgba(39, 174, 96, 0.1);
+}
+
+.dropping-area.occupied:hover {
+  transform: none;
+}
+
+.dropping-area.occupied .widget-container {
+  width: 100%;
+  height: 100%;
+}
+
+.dropping-area.occupied .widget-container .order-form-widget,
+.dropping-area.occupied .widget-container app-scheduler {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Compact Widget Styles */
+.widget-container {
+  height: 100%;
+  transition: all 0.4s ease;
+}
+
+.compact-widget {
+  width: 100%;
+  height: 100%;
+  background: rgb(255, 255, 255);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.compact-header {
+  display: flex;
+  align-items: center;
+}
+
+.compact-header .widget-icon {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.compact-header .widget-title {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.compact-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.expand-widget-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: rgb(0, 0, 0);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  transition: background 0.2s ease;
+}
+
+.expand-widget-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.widget-content {
+  flex: 1;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-content app-scheduler {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.order-form-widget-content {
+  padding: 1rem;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.order-form-widget-content .form-group {
+  margin-bottom: 1rem;
+}
+
+.order-form-widget-content .form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.order-form-widget-content .form-row .form-group {
+  flex: 1;
+}
+
+.order-form-widget-content label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.9rem;
+}
+
+.order-form-widget-content input,
+.order-form-widget-content textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.order-form-widget-content input:focus,
+.order-form-widget-content textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.expanded-area-content app-scheduler {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Expanded Widget Overlay */
+.widget-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.expanded-widget-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 800px;
+  overflow: hidden;
+  animation: expandIn 0.3s ease-out;
+}
+
+@keyframes expandIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.expanded-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+ 
+  color: white;
+}
+
+.expanded-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: rgb(0, 0, 0);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.expanded-content {
+  padding: 2rem;
+  max-height: calc(90vh - 120px);
+  overflow-y: auto;
+}
+
+.order-form-widget.expanded .widget-content {
+  padding: 0;
+}
+
+.area-number {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  background: #3498db;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.dropping-area.occupied .area-number {
+  background: #27ae60;
+}
+
+.area-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.widget-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: grab;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-user-drag: element;
+}
+
+.widget-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.widget-container:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+}
+
+/* Prevent child elements from interfering with drag */
+.widget-container * {
+  pointer-events: none;
+}
+
+.widget-container .compact-actions {
+  pointer-events: auto;
+}
+
+.widget-container .compact-actions * {
+  pointer-events: auto;
+}
+
+.dropping-area.occupied .area-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Widget Styles */
+.order-form-widget {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Remove unused widget-header, widget-title, widget-icon, expand-btn styles */
+
+/* Dropped Items */
+.dropped-item {
+  position: absolute;
+  cursor: move;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.dropped-item:hover {
+  border-color: #3498db;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.dropped-item.selected {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+  z-index: 15;
+}
+
+.dropped-item.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+  z-index: 20;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Remove unused dropped-item styles and workspace.drag-over */
+
+/* Animation for drag and drop */
+
+/* Remove unused dropAnimation keyframes and dropped-item animation */
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .tools-panel {
+    width: 20%;
+  }
+  
+  .workspace-container {
+    left: 25%;
+    width: 75%;
+  }
+}
+
+@media (max-width: 768px) {
+  .tools-panel {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    min-width: unset;
+    border-right: none;
+    border-bottom: 2px solid #e1e5e9;
+  }
+  
+  .workspace-container {
+    position: fixed;
+    left: 0;
+    top: 280px;
+    width: 100%;
+    height: calc(100vh - 280px);
+  }
+  
+  .tools-list {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  
+  .tool-item {
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+}

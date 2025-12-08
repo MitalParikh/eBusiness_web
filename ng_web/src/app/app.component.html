@@ -1,57 +1,7 @@
-<header class="fixed-header">
-  <div class="auth-links">
-    <a routerLink="/login" class="auth-link">Login</a>
-    <a routerLink="/signup" class="auth-link primary">Sign Up</a>
-  </div>
-  <div class="header-slider">
-    <!-- Images clickable to advance slider; cross-fade without flicker -->
-    <img *ngFor="let img of sliderImages; let i = index"
-         [src]="img"
-         [alt]="'Slide ' + (i+1)"
-         class="slider-image"
-         [class.active]="i === currentSlide"
-         [class.fading-out]="i === fadingOutIndex"
-         (click)="onImageClick(i)">
-  </div>
-  <div class="tools-bar">
-    <nav class="tools-tabs">
-      <a 
-        class="tools-tab" 
-        [class.active]="activeTab === 'viewer'"
-        routerLink="/" 
-        (click)="activeTab = 'viewer'" 
-        href="javascript:void(0);">
-        About
-      </a>
-      <a 
-        class="tools-tab" 
-        [class.active]="activeTab === 'admin'" 
-        routerLink="/listener"
-        (click)="activeTab = 'admin'">
-        Projects
-      </a>
-      <a 
-        class="tools-tab" 
-        [class.active]="activeTab === 'admin'" 
-        routerLink="/listener"
-        (click)="activeTab = 'admin'">
-        Order History
-      </a>
-      <a 
-        class="tools-tab" 
-        [class.active]="activeTab === 'admin'" 
-        routerLink="/listener"
-        (click)="activeTab = 'admin'">
-        Order tracking
-      </a>
-    </nav>
-  </div>
-</header>
+<app-header></app-header>
 
 <body>
-  <h1>Welcome to eBusiness</h1>
-  <p>Your content goes here.</p>
-  <main class="main-content">
+    <main class="main-content">
     <router-outlet></router-outlet><!-- Main content goes here -->
   </main>
 </body>

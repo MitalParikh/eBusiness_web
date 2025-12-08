@@ -24,7 +24,7 @@
 
 # 👋 Visit our GitHub organization at https://github.com/redhat-actions/ to see our actions and provide feedback.
 
-name: OpenShift
+name: Maven With OpenShift
 
 env:
   # 🖊️ EDIT your repository secrets to log into your OpenShift cluster and set up the context.
@@ -36,7 +36,7 @@ env:
   OPENSHIFT_NAMESPACE: "mitalparikh-dev"
 
   # 🖊️ EDIT to set a name for your OpenShift app, or a default one will be generated below.
-  APP_NAME: "eBusiness-ocp-app"
+  APP_NAME: "ebusiness-web-ocp-git"
 
   # 🖊️ EDIT with the port your application should be accessible on.
   # If the container image exposes *exactly one* port, this can be left blank.
@@ -45,12 +45,12 @@ env:
 
   # 🖊️ EDIT to change the image registry settings.
   # Registries such as GHCR, Quay.io, and Docker Hub are supported.
-  IMAGE_REGISTRY: "image-registry.openshift-image-registry.svc:5000/mitalparikh-dev/ebusiness-web-ocp-git@sha256:latest"
+  IMAGE_REGISTRY: "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/mitalparikh-dev/"
   IMAGE_REGISTRY_USER: "mitalparikh"
   IMAGE_REGISTRY_PASSWORD: ${{ secrets.OPENSHIFT_TOKEN }}
 
   # 🖊️ EDIT to specify custom tags for the container image, or default tags will be generated below.
-  IMAGE_TAGS: ""
+  IMAGE_TAGS: "latest"
 
 on:
   # Edit to the branch(es) you want to build and deploy on each push.
@@ -86,15 +86,14 @@ jobs:
       SELECTOR: ${{ steps.deploy-and-expose.outputs.selector }}
 
     steps: 
+    - uses: actions/checkout@v4
     - name: Set up JDK 17
-      uses: actions/checkout@v4 
-
-    - name: Build with Maven
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Build with Maven
       run: mvn -B package --file pom.xml
 
     - name: Check for required secrets
@@ -164,8 +163,8 @@ jobs:
       id: push-image
       uses: redhat-actions/push-to-registry@v2
       with:
-        image: ${{ steps.build-image.outputs.image }}
-        tags: ${{ steps.build-image.outputs.tags }}
+        image: ${{ env.APP_NAME }}
+        tags: ${{ env.IMAGE_TAGS }}
         registry: ${{ env.IMAGE_REGISTRY }}
         username: ${{ env.IMAGE_REGISTRY_USER }}
         password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
@@ -189,13 +188,7 @@ jobs:
     # This step should create a deployment, service, and route to run your app and expose it to the internet.
     # https://github.com/redhat-actions/oc-new-app#readme
     - name: Create and expose app
-      id: deploy-and-expose
-      uses: redhat-actions/oc-new-app@v1
-      with:
-        app_name: ${{ env.APP_NAME }}
-        image: ${{ steps.push-image.outputs.registry-path }}
-        namespace: ${{ env.OPENSHIFT_NAMESPACE }}
-        port: ${{ env.APP_PORT }}
+      run: oc new-app ebusiness-web-ocp-git:latest --name=ebusiness-web-ocp-git -n mitalparikh-dev
 
     - name: Print application URL
       env:

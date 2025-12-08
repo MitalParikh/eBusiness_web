@@ -1,0 +1,28 @@
+<div class="project-grid-bg" dynamicHeaderTheme>
+  <table class="project-grid">
+    <thead>
+      <tr>
+        <th>Project Id</th>
+        <th>Client Name</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let project of projects">
+        <tr *ngFor="let status of project.status; let i = index">
+          <td *ngIf="i === 0" [attr.rowspan]="project.status.length">{{ project.projectID }}</td>
+          <td *ngIf="i === 0" [attr.rowspan]="project.status.length">{{ project.clientName }}</td>
+          <td *ngIf="i === 0" [attr.rowspan]="project.status.length">{{ project.address }}</td>
+        
+        
+          <td [ngClass]="{'status-grayed': !project.action[i] || project.action[i] === 'Initiate' || project.action[i] === 'Complete'}">{{ status }}</td>
+          <td>
+            <button *ngIf="project.action[i] && project.action[i] !== 'Start'" dynamicHeaderTheme>{{ project.action[i] }}</button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

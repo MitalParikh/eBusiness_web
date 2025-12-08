@@ -1,0 +1,54 @@
+<div class="tools-bar">
+  <nav class="tools-tabs">
+    <a 
+      class="tools-tab" 
+      [class.active]="activeTab === 'viewer'"
+      routerLink="/" 
+      (click)="setActiveTab('viewer')" 
+      href="javascript:void(0);">
+      About
+    </a>
+    <a 
+      class="tools-tab" 
+      [class.active]="activeTab === 'ebizFlow'" 
+      routerLink="/ebizFlow"
+      (click)="setActiveTab('ebizFlow')">
+      EbizFlow
+    </a>
+    <a 
+      class="tools-tab" 
+      [class.active]="activeTab === 'admin'" 
+      routerLink="/projects"
+      (click)="setActiveTab('admin')">
+      Projects
+    </a>
+    <a 
+      class="tools-tab" 
+      [class.active]="activeTab === 'inventory'" 
+      routerLink="/inventory"
+      (click)="setActiveTab('inventory')">
+      Inventory
+    </a>
+    <a 
+      class="tools-tab" 
+      [class.active]="activeTab === 'interceptor-demo'" 
+      routerLink="/interceptor-demo"
+      (click)="setActiveTab('interceptor-demo')">
+      HTTP Demo
+    </a>
+    <!-- <a 
+      class="tools-tab" 
+      [class.active]="activeTab === 'admin'" 
+      routerLink="/listener"
+      (click)="setActiveTab('admin')">
+      Order History
+    </a>
+    <a 
+      class="tools-tab" 
+      [class.active]="activeTab === 'admin'" 
+      routerLink="/listener"
+      (click)="setActiveTab('admin')">
+      Order tracking
+    </a> -->
+  </nav>
+</div>

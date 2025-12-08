@@ -1,0 +1,19 @@
+<header class="fixed-header">
+  <div class="auth-links">
+    <!-- Show login/signup links when user is not authenticated -->
+    <ng-container *ngIf="user$ | async as user; else notLoggedIn">
+      <span class="user-info">Welcome, {{ user.displayName || user.email }}</span>
+      <button class="auth-link logout-btn" (click)="logout()">Logout</button>
+    </ng-container>
+    <ng-template #notLoggedIn>
+      <a routerLink="/login" class="auth-link">Login</a>
+    </ng-template>
+  </div>
+  
+  <app-image-slider/>
+  
+  <app-tools-bar 
+    [activeTab]="activeTab"
+    (tabChanged)="onTabChanged($event)">
+  </app-tools-bar>
+</header>

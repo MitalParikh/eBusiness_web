@@ -1,11 +1,5 @@
-FROM registry.access.redhat.com/ubi8/openjdk-17:1.20-2
-
-# Create deployments directory and copy the WAR produced by Maven
-RUN mkdir -p /deployments
-COPY target/*.war /deployments/
-
-# Expose the application port
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY target/web_ocp-0.0.1.war web_ocp.war
 EXPOSE 8080
-
-# Use a shell-based entrypoint so the jar filename can be wildcarded
-ENTRYPOINT ["sh", "-c", "java -jar /deployments/*.war"]
+CMD ["java", "-jar", "web_ocp.war"]

@@ -1,0 +1,237 @@
+<div class="ebizFlow-container">
+ 
+
+  <!-- Left Tools Panel -->
+  <div class="tools-panel">
+    <div class="tools-header">
+      <h3>Tools</h3>
+    </div>
+    <div class="tools-list">
+    @for (tool of tools; track tool.name) {
+      <div 
+        class="tool-item"
+        draggable="true"
+        (dragstart)="onDragStart($event, tool)"
+        [title]="tool.description">
+        <div class="tool-icon">{{ tool.icon }}</div>
+        <div class="tool-name">{{ tool.name }}</div>
+      </div>
+    }
+    </div>
+    
+    
+  </div>
+
+  <!-- Main Workspace -->
+  <div dynamicHeaderTheme class="workspace-container" >
+      <!-- Workspace Controls -->
+
+      <div class="workspace-controls">
+        <select class="workspace-dropdown" [(ngModel)]="selectedMode" (ngModelChange)="onModeChange()">
+          <option value="create-new">Create New</option>
+          <option value="edit-existing">Edit Existing</option>
+          <option value="view-templates">View Templates</option>
+        </select>
+      </div>
+
+      <div 
+        class="workspace"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event)">
+        
+        <!-- Grid of Dropping Areas -->
+        <div class="dropping-areas-grid">
+          <!-- Numbered dropping areas -->
+          @for (area of droppingAreas; track area.number) {
+          <div 
+            class="dropping-area"
+            [class.occupied]="area.hasContent"
+            [class.drag-over]="area.isDragOver"
+            (dragover)="onAreaDragOver($event, area)"
+            (dragenter)="onAreaDragEnter($event, area)"
+            (dragleave)="onAreaDragLeave($event, area)"
+            (drop)="onAreaDrop($event, area)">
+            <div class="area-number" dynamicHeaderTheme>{{ area.number }}</div>
+            @defer(when area.droppedItem) {
+            @if(area.droppedItem) {
+            <div class="area-content">
+              <!-- Widget view -->
+              <div class="widget-container" 
+                   draggable="true"
+                   (dragstart)="onWidgetDragStart($event, area)"
+                   (dragend)="onWidgetDragEnd($event)"
+                   [title]="'Drag to move ' + area.droppedItem.name">
+                <!-- Scheduler Component -->
+                @if (area.droppedItem.type === 'scheduler') {
+                <div class="compact-widget scheduler-compact">
+                  <div class="compact-header">
+                    <span class="widget-icon">{{ area.droppedItem.icon }}</span>
+                    <span class="widget-title">{{ area.droppedItem.name }}</span>
+                    <div class="compact-actions">
+                      <button class="expand-widget-btn" 
+                              (click)="expandWidget(area); $event.stopPropagation()" 
+                              (mousedown)="$event.stopPropagation()"
+                              title="Open in Modal">
+                        ⛶
+                      </button>
+                      <button class="close-btn" 
+                              (click)="onAreaItemDelete(area); $event.stopPropagation()" 
+                              (mousedown)="$event.stopPropagation()"
+                              title="Delete">×</button>
+                    </div>
+                  </div>
+                  <div class="widget-content">
+                    <app-scheduler 
+                      [schedulerData]="schedulerData"
+                      [title]="area.droppedItem.name"
+                      [icon]="area.droppedItem.icon"
+                      [showDeleteButton]="false"
+                      (dataChange)="onSchedulerDataChange($event)">
+                    </app-scheduler>
+                  </div>
+                </div>
+                } @else if(area.droppedItem.type === 'order-form') {
+
+                <!-- Order Form Component -->
+                <div class="compact-widget order-form-compact">
+                  <div class="compact-header">
+                    <span class="widget-icon">{{ area.droppedItem.icon }}</span>
+                    <span class="widget-title">{{ area.droppedItem.name }}</span>
+                    <div class="compact-actions">
+                      <button class="expand-widget-btn" 
+                              (click)="expandWidget(area); $event.stopPropagation()" 
+                              (mousedown)="$event.stopPropagation()"
+                              title="Open in Modal">
+                        ⛶
+                      </button>
+                      <button class="close-btn" 
+                              (click)="onAreaItemDelete(area); $event.stopPropagation()" 
+                              (mousedown)="$event.stopPropagation()"
+                              title="Delete">×</button>
+                    </div>
+                  </div>
+                  <div class="widget-content">
+                    <div class="order-form-widget-content">
+                      <div class="form-group">
+                        <label>Order Number:</label>
+                        <input type="text" [(ngModel)]="orderDetails.orderNumber" placeholder="Auto-generated">
+                      </div>
+                      <div class="form-group">
+                        <label>Customer Name:</label>
+                        <input type="text" [(ngModel)]="orderDetails.customerName" placeholder="Enter customer name">
+                      </div>
+                      <div class="form-group">
+                        <label>Customer Email:</label>
+                        <input type="email" [(ngModel)]="orderDetails.customerEmail" placeholder="customer@email.com">
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group">
+                          <label>Order Date:</label>
+                          <input type="date" [(ngModel)]="orderDetails.orderDate">
+                        </div>
+                        <div class="form-group">
+                          <label>Delivery Date:</label>
+                          <input type="date" [(ngModel)]="orderDetails.deliveryDate">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Items:</label>
+                        <textarea [(ngModel)]="orderDetails.items" placeholder="List order items..." rows="2"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label>Notes:</label>
+                        <textarea [(ngModel)]="orderDetails.notes" placeholder="Additional notes..." rows="2"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                }
+              </div>
+            </div>
+            } @else {
+              <div class="area-placeholder">
+                Drop tools here
+              </div>
+            }
+            } @placeholder {
+            <div class="area-placeholder">
+              Drop tools here
+            </div>
+            } 
+          </div>
+          
+          }
+          <!-- Add new area button -->
+          <div class="add-area-btn" (click)="addNewDroppingArea()" title="Add New Area">
+            <div class="add-icon">+</div>
+          </div>
+          </div>
+          
+          
+          
+      </div>
+  </div>
+</div>
+
+<!-- Expanded Widget Overlay -->
+ @if (expandedWidget) {
+<div class="widget-overlay" (click)="closeExpandedWidget()">
+  <div class="expanded-widget-container" (click)="$event.stopPropagation()">
+    <div class="expanded-header" dynamicHeaderTheme>
+      <h3>{{ expandedWidget.name }} - Area {{ expandedWidget.areaNumber }}</h3>
+      <button class="close-btn" (click)="closeExpandedWidget()" title="Collapse to Widget">⊟</button>
+    </div>
+    
+    <div class="expanded-content">
+      <!-- Full Scheduler Component -->
+       @if (  expandedWidget.type === 'scheduler') {
+      <app-scheduler 
+        [schedulerData]="schedulerData"
+        [title]="expandedWidget.name"
+        [icon]="expandedWidget.icon"
+        [showHeader]="false"
+        [showDeleteButton]="false"
+        (dataChange)="onSchedulerDataChange($event)">
+      </app-scheduler>
+    } @else if (expandedWidget.type === 'order-form') {
+
+      <!-- Full Order Form Component -->
+      <div class="order-form-widget expanded">
+        <div class="widget-content">
+          <div class="form-group">
+            <label>Order Number:</label>
+            <input type="text" [(ngModel)]="orderDetails.orderNumber" placeholder="Auto-generated">
+          </div>
+          <div class="form-group">
+            <label>Customer Name:</label>
+            <input type="text" [(ngModel)]="orderDetails.customerName" placeholder="Enter customer name">
+          </div>
+          <div class="form-group">
+            <label>Customer Email:</label>
+            <input type="email" [(ngModel)]="orderDetails.customerEmail" placeholder="customer@email.com">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Order Date:</label>
+              <input type="date" [(ngModel)]="orderDetails.orderDate">
+            </div>
+            <div class="form-group">
+              <label>Delivery Date:</label>
+              <input type="date" [(ngModel)]="orderDetails.deliveryDate">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Items:</label>
+            <textarea [(ngModel)]="orderDetails.items" placeholder="List order items..." rows="4"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Notes:</label>
+            <textarea [(ngModel)]="orderDetails.notes" placeholder="Additional notes..." rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+    }
+    </div>
+  </div>
+</div>
+}

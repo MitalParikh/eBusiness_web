@@ -1,0 +1,88 @@
+<div class="scheduler-widget">
+  
+  <div class="widget-content">
+    <div class="form-group">
+      <label for="eventTitle">Event Title:</label>
+      <input 
+        id="eventTitle"
+        type="text" 
+        [(ngModel)]="schedulerData.eventTitle" 
+        (ngModelChange)="onDataChange()"
+        placeholder="Enter event title"
+        class="form-control">
+    </div>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label for="eventDate">Date:</label>
+        <input 
+          id="eventDate"
+          type="date" 
+          [(ngModel)]="schedulerData.eventDate"
+          (ngModelChange)="onDataChange()"
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="eventTime">Time:</label>
+        <input 
+          id="eventTime"
+          type="time" 
+          [(ngModel)]="schedulerData.eventTime"
+          (ngModelChange)="onDataChange()"
+          class="form-control">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="duration">Duration:</label>
+      <select 
+        id="duration"
+        [(ngModel)]="schedulerData.duration"
+        (ngModelChange)="onDataChange()"
+        class="form-control">
+        <option value="30">30 minutes</option>
+        <option value="60">1 hour</option>
+        <option value="90">1.5 hours</option>
+        <option value="120">2 hours</option>
+        <option value="180">3 hours</option>
+        <option value="240">4 hours</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="participants">Participants:</label>
+      <textarea 
+        id="participants"
+        [(ngModel)]="schedulerData.participants"
+        (ngModelChange)="onDataChange()"
+        placeholder="Enter participant names or emails..."
+        rows="2"
+        class="form-control"></textarea>
+    </div>
+    
+    <!-- Summary Section -->
+    <div *ngIf="isValid" class="event-summary">
+      <h4>Event Summary</h4>
+      <div class="summary-item">
+        <strong>{{ schedulerData.eventTitle }}</strong>
+      </div>
+      <div class="summary-item">
+        📅 {{ formattedDateTime }}
+      </div>
+      <div class="summary-item">
+        ⏱️ {{ durationLabel }}
+      </div>
+      <div *ngIf="schedulerData.participants" class="summary-item">
+        👥 {{ schedulerData.participants }}
+      </div>
+    </div>
+    
+    <!-- Validation Errors -->
+    <div *ngIf="!isValid && validationErrors.length > 0" class="validation-errors">
+      <h5>Please complete:</h5>
+      <ul>
+        <li *ngFor="let error of validationErrors">{{ error }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
