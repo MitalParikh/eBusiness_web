@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 env:
   AWS_REGION: us-east-2                  # Set your preferred AWS region
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
