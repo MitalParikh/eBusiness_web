@@ -1,15 +1,48 @@
-name: Build and Deploy Angular App to AWS S3 with CloudFront
+name: Deploy Angular App to AWS ECS
 
 on:
   push:
-    branches: feature/V1 # Trigger the workflow on pushes to the mentioned branch(es)
+    branches:
+      - feature/v1 # Trigger on pushes to the mentioned branch
   workflow_dispatch:
 
 env:
-  AWS_REGION: us-east-2
+  AWS_REGION: us-east-2                  # Set your preferred AWS region
   
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    
-    
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22' # Or your required Node.js version
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./ng_web # Specify the directory containing package.json
+
+      - name: Build Angular application
+        run: npm run build -- --configuration=production # Adjust if your build command differs
+        working-directory: ./ng_web # Specify the directory containing package.json
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync dist/ebusiness s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
