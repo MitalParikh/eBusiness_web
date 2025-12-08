@@ -1,14 +1,17 @@
-name: Deploy Angular App to S3 and CloudFront
+name: Build and Deploy Angular App to AWS S3 with CloudFront
 
 on:
   push:
-    branches: [ "feature/V1" ] # Trigger the workflow on pushes to the mentioned branch(es)
+  branches: [ "feature/V1" ] # Trigger the workflow on pushes to the mentioned branch(es)
   workflow_dispatch:
+
 env:
-  AWS_REGION: us-east-2                  # Set your preferred AWS region
+  AWS_REGION: us-east-2
+  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
