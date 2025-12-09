@@ -1,9 +1,5 @@
 name: Deploy Angular App to S3 and CloudFront
 
-on:
-  push:
-    branches: [ ] # Trigger the workflow on pushes to the main branch
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
