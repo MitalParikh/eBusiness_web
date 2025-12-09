@@ -33,7 +33,7 @@ jobs:
       with:
         aws-region: us-east-2
         role-to-assume: ${{ secrets.AWS_OIDC_ECR_ROLE_ARN }}
-        role-session-name: github-actions-${{ github.run_id }}}
+        role-session-name: github-actions-${{ github.run_id }}
 
     - name: Login to Amazon ECR
       id: login-ecr
