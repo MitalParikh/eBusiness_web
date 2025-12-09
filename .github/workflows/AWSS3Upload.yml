@@ -2,7 +2,7 @@ name: Deploy Angular App to S3 and CloudFront
 
 on:
   push:
-    branches: [ "feature/V1" ] # Trigger the workflow on pushes to the main branch
+    branches: [ ] # Trigger the workflow on pushes to the main branch
 
 jobs:
   deploy:
