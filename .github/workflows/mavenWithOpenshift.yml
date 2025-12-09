@@ -55,7 +55,7 @@ env:
 on:
   # Edit to the branch(es) you want to build and deploy on each push.
   push:
-    branches: [ "feature/V1" ]
+    branches: [ ]
   # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
   workflow_dispatch:
 
