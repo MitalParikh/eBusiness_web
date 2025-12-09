@@ -53,8 +53,6 @@ env:
   IMAGE_TAGS: "latest"
 
 on:
-  # Edit to the branch(es) you want to build and deploy on each push.
-  push:
   # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
   workflow_dispatch:
 
