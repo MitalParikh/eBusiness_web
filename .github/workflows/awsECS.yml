@@ -3,6 +3,7 @@ name: Deploy Springboot to Amazon ECS and EKS
 on:
   push:
     branches: [ "feature/v1" ]
+  workflow_dispatch:
 
 env:
   AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
