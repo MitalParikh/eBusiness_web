@@ -1,4 +1,4 @@
-name: Deploy Springboot to Amazon ECS and EKS
+name: Deploy Springboot to Amazon ECR and EKS
 
 on:
   push:
