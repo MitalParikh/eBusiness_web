@@ -1,8 +1,6 @@
     name: Maven with Google Cloud
 
     on:
-      push:
-            branches: [ ]
       # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
       workflow_dispatch:
         
